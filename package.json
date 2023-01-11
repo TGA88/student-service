@@ -26,9 +26,12 @@
   },
   "private": true,
   "dependencies": {
+    "-": "^0.0.1",
+    "@nearform/brokeneck-fastify": "^1.0.0-spinal.8",
     "@prisma/client": "^4.8.0",
     "fastify": "^4.10.2",
     "fastify-file-upload": "^4.0.0",
+    "fastify-jwt": "^4.2.0",
     "fastify-multer": "^2.0.3",
     "fastify-zod": "^1.2.0",
     "multer": "^1.4.5-lts.1",
