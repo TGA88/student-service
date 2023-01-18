@@ -26,6 +26,7 @@
   },
   "private": true,
   "dependencies": {
+    "@fastify/cors": "^8.2.0",
     "@inh-lib/common": "^0.1.2",
     "@inh-lib/ddd": "^0.2.0",
     "@prisma/client": "^4.8.0",

@@ -11,11 +11,15 @@ import {
   getOneCustmoer,
   // uploadfileCustmoer,
   uploadfileAndBody,
-  uploadfileAndBase64
+  uploadfileAndBase64,
+  uploadfileEncode,
 } from './controller';
 
 async function customerRoutes(server: FastifyInstance) {
-  server.post('/base64', uploadfileAndBase64);
+
+  server.post('/encode',{preHandler:upload,handler:uploadfileEncode});
+
+  server.post('/base64',{preHandler:upload,handler:uploadfileAndBase64});
 
   server.get('/', getCustmoer);
   server.get('/:id', getOneCustmoer);

@@ -6,6 +6,7 @@ import registerAppRoutes  from "./modules/routes";
 import initialDomainEventHandler from "./modules/event-handler.register";
 
 const server = Fastify()
+server.register(cors)
 server.register(multer.contentParser)
 server.get('/healthcheck', async function () {
   return { status: "OK" }
