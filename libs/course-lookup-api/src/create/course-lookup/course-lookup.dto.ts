@@ -17,6 +17,6 @@ export const courseLookupInputSchema = z.object({
 
 export type CreateCourseLookupInputDTO = z.infer<typeof courseLookupInputSchema>
 
-export const { schemas: productSchemas, $ref} = buildJsonSchemas({
+export const { schemas: courseLookupSchemas, $ref} = buildJsonSchemas({
   courseLookupInputSchema
 })

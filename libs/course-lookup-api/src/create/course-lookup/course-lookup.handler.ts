@@ -4,7 +4,7 @@ import { CourseLookupAGM, CourseLookupAGMParser, CourseLookupRepo } from "@stude
 import { CreateCourseLookupInputDTO } from "./course-lookup.dto";
 import { CreateFailures } from "./course-lookup.failures";
 
-export type CourseLookupResponseDTO = Either<GenericAppError.UnexpectedError |CreateFailures.CreateFail,Result<CreateCourseLookupInputDTO>>
+export type CourseLookupResponseDTO = Either<GenericAppError.UnexpectedError | CreateFailures.CreateFail,Result<CreateCourseLookupInputDTO>>
 
 export class CourseLookupHandler implements UseCase<CreateCourseLookupInputDTO,Promise<CourseLookupResponseDTO>>{
   private repo: CourseLookupRepo

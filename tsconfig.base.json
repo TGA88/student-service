@@ -16,11 +16,18 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@student-service/course-info-api": ["libs/course-info-api/src/index.ts"],
+      "@student-service/course-info-core": [
+        "libs/course-info-core/src/index.ts"
+      ],
       "@student-service/course-lookup-api": [
         "libs/course-lookup-api/src/index.ts"
       ],
       "@student-service/course-lookup-core": [
         "libs/course-lookup-core/src/index.ts"
+      ],
+      "@student-service/course-store-prisma": [
+        "libs/course-store-prisma/src/index.ts"
       ],
       "@student-service/crud-api": ["libs/crud-api/src/index.ts"],
       "@student-service/crud-core": ["libs/crud-core/src/index.ts"],
