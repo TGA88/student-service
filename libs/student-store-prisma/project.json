@@ -23,7 +23,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "npx prisma migrate dev --name studentmsc --create-only --schema  ./libs/student-store-prisma/prisma/schema.prisma "
+          "prisma migrate dev --name studentmsc --create-only --schema  ./libs/student-store-prisma/prisma/schema.prisma "
         ],
         "parallel": false
       }
