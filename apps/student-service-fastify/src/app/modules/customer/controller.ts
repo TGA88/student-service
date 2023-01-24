@@ -173,10 +173,13 @@ export async function uploadfileEncode(req: FastifyRequest <{Body: ICustomerMode
             //         // fullname:req.body.fullname,
             //         // fullname:files.path,
 
-            //         // fullname:files["fileName:"]
+            //         fullname:files["fileName"]
             //     }
             // });
-            reply.status(200).send(files)
+            // reply.status(200).send(customer)
+            // console.log(customer)
+
+            // reply.status(200).send(files)
 
          }
          catch (e) {
