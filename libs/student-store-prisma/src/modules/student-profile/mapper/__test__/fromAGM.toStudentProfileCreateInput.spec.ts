@@ -10,7 +10,7 @@ describe('Test agmToStudentProfileCreateInput ', () => {
     code: 0,
     fullName: 'name surename',
     address:'home1234',
-    mobileNo: PhoneNoVO.createVO({
+    mobilePhone: PhoneNoVO.createVO({
       phoneNo: '0123456789',
     }).getValue() as PhoneNoVO,
     birthDate: new Date(2000, 1, 1)
@@ -37,7 +37,7 @@ describe('Test agmToStudentProfileCreateInput ', () => {
   it("mobilePhone should be undefiend when AGM.mobilePhone.props.phoneNo is undefiend ",()=>{
     const props:ProfileAGMProps={
         ...defaultProps,
-        mobileNo: new PhoneNoVO({phoneNo:undefined})
+        mobilePhone: new PhoneNoVO({phoneNo:undefined})
     }
 
     const agm = ProfileAGM.create(props);

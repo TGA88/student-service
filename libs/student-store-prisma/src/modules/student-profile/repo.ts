@@ -1,7 +1,7 @@
 import { Result } from '@inh-lib/common';
 import { UniqueEntityID } from '@inh-lib/ddd';
-import { Prisma, StudentProfile } from '@prisma/client';
-
+// import { Prisma, StudentProfile } from '@prisma/client';
+import { Prisma,StudentProfile } from 'libs/student-store-prisma/prisma/generated/prisma-client-js';
 //import dbhook for prisma trigger DomainEventHandler
 import "./dbhooks";
 
@@ -15,6 +15,7 @@ import prisma from '../../dbclient';
 
 export class StudentProfileRepoEmpl implements StudentProfileRepo {
   async getById(id: string): Promise<Result<ProfileAGM>> {
+    console.log(id)
     throw new Error('Method not implemented.');
   }
 
@@ -42,12 +43,15 @@ export class StudentProfileRepoEmpl implements StudentProfileRepo {
   }
 
   async update(profileAGM: ProfileAGM): Promise<Result<ProfileAGM>> {
+    console.log(profileAGM);
     throw new Error('Method not implemented.');
   }
   async existsByFullName(fullName: string): Promise<Result<boolean>> {
+    console.log(fullName);
     throw new Error('Method not implemented.');
   }
   async existsByKey(id: UniqueEntityID): Promise<Result<boolean>> {
+    console.log(id);
     throw new Error('Method not implemented.');
   }
 }

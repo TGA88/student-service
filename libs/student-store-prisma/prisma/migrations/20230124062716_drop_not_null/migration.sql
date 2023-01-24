@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "StudentProfile" ALTER COLUMN "updateAt" DROP NOT NULL,
+ALTER COLUMN "birthDate" DROP NOT NULL,
+ALTER COLUMN "mobilePhone" DROP NOT NULL;

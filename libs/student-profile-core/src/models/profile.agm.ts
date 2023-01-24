@@ -9,7 +9,7 @@ export interface ProfileAGMProps {
   fullName: string;
   address: string;
   homePhone?: PhoneNoVO | null;
-  mobileNo: PhoneNoVO;
+  mobilePhone: PhoneNoVO;
   birthDate: Date;
 }
 
@@ -37,7 +37,7 @@ export class ProfileAGM extends AggregateRoot<ProfileAGMProps> {
   }
 
   public get mobilePhone(): PhoneNoVO {
-    return this.props.mobileNo;
+    return this.props.mobilePhone;
   }
 
   constructor(props: ProfileAGMProps, id?: UniqueEntityID) {
@@ -73,7 +73,6 @@ export class ProfileAGM extends AggregateRoot<ProfileAGMProps> {
       'address'
     );
     const hasValueResult = Guard.combine([fullNameHasValue, addressHasValue]);
-
     if (!hasValueResult.succeeded) {
       return Result.fail<ProfileAGM>(hasValueResult.message);
     }

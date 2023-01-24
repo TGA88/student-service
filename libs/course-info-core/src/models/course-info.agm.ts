@@ -1,5 +1,6 @@
 import { Guard, Result } from "@inh-lib/common"
 import { AggregateRoot, UniqueEntityID } from "@inh-lib/ddd"
+import { CourseInfoCreatedEvent } from "../events/courseInfoCreatedEvent"
 
 export interface CourseInfoAGMProps{
   id?: string
@@ -36,6 +37,8 @@ export class CourseInfoAGM extends AggregateRoot<CourseInfoAGMProps>{
     }
     try {
       const agm = new CourseInfoAGM(props, id)
+      console.log("create course Lookup core")
+      agm.addDomainEvent(new CourseInfoCreatedEvent(agm))
       return Result.ok<CourseInfoAGM>(agm)
     } catch (error) {
       return Result.fail<CourseInfoAGM>(error.message)

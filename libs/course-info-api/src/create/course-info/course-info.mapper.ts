@@ -4,6 +4,7 @@ import { CreateCourseInfoInputDTO } from "./course-info.dto";
 
 export const parseReqToDTO: CourseInfoAGMParser<CreateCourseInfoInputDTO> = (rawData: CreateCourseInfoInputDTO): Result<CourseInfoAGM> => {
   try {
+    console.log("parse mapper")
     const props: CourseInfoAGMProps = {
       id: rawData.id as string,
       courseName: rawData.courseName as string,

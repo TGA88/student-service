@@ -54,6 +54,14 @@ services:
       - KAFKA_offsets_topic_replication_factor=1 # value 1 because only 1 cluster
       # - KAFKA_LISTENERS=PLAINTEXT://:9092
       # - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.1.55:9092
+  kafka-ui:
+    image: provectuslabs/kafka-ui
+    ports:
+      - "8088:8080"
+    restart: always
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=localhost:9092
 
   # postgres2:
   #   container_name: postgres_smartmore_identity

@@ -16,6 +16,8 @@ export async function start() {
         replicationFactor: 1,
       }]
     }).then(()=> console.log("Topic Created!"))
+
+    await admin.disconnect()
   }catch(err){
     console.error(err);
   }

@@ -16,6 +16,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@student-service/course-broker-kafka": [
+        "libs/course-broker-kafka/src/index.ts"
+      ],
       "@student-service/course-info-api": ["libs/course-info-api/src/index.ts"],
       "@student-service/course-info-core": [
         "libs/course-info-core/src/index.ts"
@@ -32,6 +35,9 @@
       "@student-service/crud-api": ["libs/crud-api/src/index.ts"],
       "@student-service/crud-core": ["libs/crud-core/src/index.ts"],
       "@student-service/crud-core-api": ["libs/crud-core-api/src/index.ts"],
+      "@student-service/student-broker-kafka": [
+        "libs/student-broker-kafka/src/index.ts"
+      ],
       "@student-service/student-profile-api": [
         "libs/student-profile-api/src/index.ts"
       ],

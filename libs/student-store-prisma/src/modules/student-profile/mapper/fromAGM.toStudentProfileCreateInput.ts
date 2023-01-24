@@ -1,5 +1,5 @@
 import { Result } from '@inh-lib/common';
-import { Prisma } from '@prisma/client';
+import { Prisma } from '../../../../prisma/generated/prisma-client-js';
 import { ProfileAGM } from '@student-service/student-profile-core';
 
 export function agmToStudentProfileCreateInput(agm: ProfileAGM):Result<Prisma.StudentProfileCreateInput> {

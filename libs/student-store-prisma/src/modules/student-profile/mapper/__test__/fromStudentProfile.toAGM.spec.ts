@@ -1,5 +1,5 @@
 import { UniqueEntityID } from '@inh-lib/ddd';
-import { StudentProfile } from '@prisma/client';
+import { StudentProfile } from '../../../../../prisma/generated/prisma-client-js';
 import { studentProfileToAGM } from '../fromStudentProfile.toAGM';
 
 describe('Test studentProfileToAGM', () => {
@@ -35,7 +35,7 @@ describe('Test studentProfileToAGM', () => {
       expect(res.getValue()?.homePhone?.props.phoneNo).toBeUndefined();
   
   })
-  it("mobileNo should be undefined when model.mobilePhone is null",()=>{
+  it("mobilePhone should be undefined when model.mobilePhone is null",()=>{
     const model: StudentProfile = {
         ...defaultModel,
         mobilePhone: null

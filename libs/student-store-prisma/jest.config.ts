@@ -14,5 +14,5 @@ export default {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/libs/student-store-prisma',
-  setupFilesAfterEnv: ['<rootDir>/singleton.ts']
+  // setupFilesAfterEnv: ['<rootDir>/singleton.ts']
 };

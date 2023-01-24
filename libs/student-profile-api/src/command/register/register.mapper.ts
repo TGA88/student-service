@@ -34,9 +34,9 @@ export const parseReqToDTO: ProfileAGMParser<RegisterRequestDTO> = (
       code:0,
       fullName: rawData.fullName,
       address: rawData.address,
-      mobileNo: mobileOrError.getValue() as PhoneNoVO,
+      mobilePhone: mobileOrError.getValue() as PhoneNoVO,
       homePhone: homeOrError.getValue(),
-      birthDate: rawData.birthDate,
+      birthDate: rawData.birthDate as Date,
     };
 
     const agmOrError = ProfileAGM.create(props);

@@ -1,11 +1,11 @@
 import { Result } from '@inh-lib/common';
 import { UniqueEntityID } from '@inh-lib/ddd';
-import { StudentProfile } from '@prisma/client';
+import { StudentProfile } from '../../../../prisma/generated/prisma-client-js';
 import { PhoneNoVO, ProfileAGM, ProfileAGMProps } from '@student-service/student-profile-core';
 
 export function studentProfileToAGM(model:StudentProfile):Result<ProfileAGM> {
 
-
+console.log("mapping")
 /*Don't Validate BusinessLogic by ValueObject and AggregateRootModel
  so that when you change business requirement then 
  system will be able to retrive Data from DB to display in UI.
@@ -27,7 +27,7 @@ export function studentProfileToAGM(model:StudentProfile):Result<ProfileAGM> {
     const props:ProfileAGMProps = {
         code: model.code,
         fullName: model.fullName,
-        mobileNo: mobilePhone,
+        mobilePhone: mobilePhone,
         homePhone: homePhone,
         birthDate: model.birthDate as Date,
         address: model.address || ""
@@ -37,6 +37,7 @@ export function studentProfileToAGM(model:StudentProfile):Result<ProfileAGM> {
     return Result.ok(result)
 
   } catch (error) {
+    console.log("Mapping fail")
     return Result.fail(error)
   }
   
