@@ -4,6 +4,7 @@ import { courseLookupRoutes } from "./modules/course-lookup/route";
 
 import registerAppRoutes  from "./modules/routes";
 import initialDomainEventHandler from "./modules/event-handler.register";
+import cors from "@fastify/cors";
 
 const server = Fastify()
 server.register(cors)
