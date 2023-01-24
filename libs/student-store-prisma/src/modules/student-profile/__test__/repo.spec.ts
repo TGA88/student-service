@@ -15,7 +15,7 @@ import {
   ProfileAGMProps,
 } from '@student-service/student-profile-core';
 import { Result } from '@inh-lib/common';
-import { StudentProfile } from '../../../../prisma/generated/prisma-client-js';
+import { StudentProfile } from '../../../generated/prisma-client-js';
 
 describe('Test StudentProfileRepoEmpl.create', () => {
   const repo: StudentProfileRepoEmpl = new StudentProfileRepoEmpl();

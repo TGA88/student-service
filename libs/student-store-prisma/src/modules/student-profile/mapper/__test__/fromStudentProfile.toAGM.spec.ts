@@ -1,5 +1,5 @@
 import { UniqueEntityID } from '@inh-lib/ddd';
-import { StudentProfile } from '../../../../../prisma/generated/prisma-client-js';
+import { StudentProfile } from '../../../../generated/prisma-client-js';
 import { studentProfileToAGM } from '../fromStudentProfile.toAGM';
 
 describe('Test studentProfileToAGM', () => {

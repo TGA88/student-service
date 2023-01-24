@@ -1,7 +1,7 @@
 import { Result } from '@inh-lib/common';
 import { UniqueEntityID } from '@inh-lib/ddd';
 // import { Prisma, StudentProfile } from '@prisma/client';
-import { Prisma,StudentProfile } from 'libs/student-store-prisma/prisma/generated/prisma-client-js';
+// import { Prisma,StudentProfile } from 'src/generated/prisma-client-js';
 //import dbhook for prisma trigger DomainEventHandler
 import "./dbhooks";
 
@@ -12,6 +12,7 @@ import {
 
 import * as mapper from './mapper';
 import prisma from '../../dbclient';
+import {Prisma, StudentProfile } from '../../generated/prisma-client-js';
 
 export class StudentProfileRepoEmpl implements StudentProfileRepo {
   async getById(id: string): Promise<Result<ProfileAGM>> {

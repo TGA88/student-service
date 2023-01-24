@@ -1,6 +1,6 @@
 import { Result } from '@inh-lib/common';
 import { UniqueEntityID } from '@inh-lib/ddd';
-import { StudentProfile } from '../../../../prisma/generated/prisma-client-js';
+import { StudentProfile } from '../../../generated/prisma-client-js';
 import { PhoneNoVO, ProfileAGM, ProfileAGMProps } from '@student-service/student-profile-core';
 
 export function studentProfileToAGM(model:StudentProfile):Result<ProfileAGM> {
