@@ -27,7 +27,7 @@
   "private": true,
   "dependencies": {
     "@inh-lib/common": "^0.1.2",
-    "@inh-lib/ddd": "^0.2.0",
+    "@inh-lib/ddd": "^0.2.2",
     "@prisma/client": "^4.8.0",
     "axios": "^1.2.3",
     "fastify": "^4.10.2",

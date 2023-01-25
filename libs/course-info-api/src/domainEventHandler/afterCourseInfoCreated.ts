@@ -13,14 +13,17 @@ export class AfterCourseInoCreated implements IHandle , IEventHandler<CourseInfo
     this.broker = broker;
   }
 
-  handle(event: CourseInfoCreatedEvent): void {
+  async handle(event: CourseInfoCreatedEvent): Promise<void> {
+      console.log('handle')
       this.onCourseInfoCreatedEvent(event)
+      
   }
 
   setupSubscriptions(): void {
     console.log("setup sub")
     console.log(".name",CourseInfoCreatedEvent.name)
-    DomainEvents.register(this.onCourseInfoCreatedEvent.bind(this), CourseInfoCreatedEvent.name);
+    let handle = this.handle.bind(this)
+    DomainEvents.register(handle, CourseInfoCreatedEvent.name);
   }
 
   private async onCourseInfoCreatedEvent (event: CourseInfoCreatedEvent): Promise<void> {
