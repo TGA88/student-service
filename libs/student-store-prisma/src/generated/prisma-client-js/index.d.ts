@@ -54,7 +54,9 @@ export type StudentWishList = {
 export type CourseLookup = {
   id: string
   originalCourseId: string
-  title: string
+  courseName: string
+  courseStartDate: string | null
+  price: string | null
   createAt: Date
   updateAt: Date
 }
@@ -4367,7 +4369,9 @@ export namespace Prisma {
   export type CourseLookupMinAggregateOutputType = {
     id: string | null
     originalCourseId: string | null
-    title: string | null
+    courseName: string | null
+    courseStartDate: string | null
+    price: string | null
     createAt: Date | null
     updateAt: Date | null
   }
@@ -4375,7 +4379,9 @@ export namespace Prisma {
   export type CourseLookupMaxAggregateOutputType = {
     id: string | null
     originalCourseId: string | null
-    title: string | null
+    courseName: string | null
+    courseStartDate: string | null
+    price: string | null
     createAt: Date | null
     updateAt: Date | null
   }
@@ -4383,7 +4389,9 @@ export namespace Prisma {
   export type CourseLookupCountAggregateOutputType = {
     id: number
     originalCourseId: number
-    title: number
+    courseName: number
+    courseStartDate: number
+    price: number
     createAt: number
     updateAt: number
     _all: number
@@ -4393,7 +4401,9 @@ export namespace Prisma {
   export type CourseLookupMinAggregateInputType = {
     id?: true
     originalCourseId?: true
-    title?: true
+    courseName?: true
+    courseStartDate?: true
+    price?: true
     createAt?: true
     updateAt?: true
   }
@@ -4401,7 +4411,9 @@ export namespace Prisma {
   export type CourseLookupMaxAggregateInputType = {
     id?: true
     originalCourseId?: true
-    title?: true
+    courseName?: true
+    courseStartDate?: true
+    price?: true
     createAt?: true
     updateAt?: true
   }
@@ -4409,7 +4421,9 @@ export namespace Prisma {
   export type CourseLookupCountAggregateInputType = {
     id?: true
     originalCourseId?: true
-    title?: true
+    courseName?: true
+    courseStartDate?: true
+    price?: true
     createAt?: true
     updateAt?: true
     _all?: true
@@ -4496,7 +4510,9 @@ export namespace Prisma {
   export type CourseLookupGroupByOutputType = {
     id: string
     originalCourseId: string
-    title: string
+    courseName: string
+    courseStartDate: string | null
+    price: string | null
     createAt: Date
     updateAt: Date
     _count: CourseLookupCountAggregateOutputType | null
@@ -4521,7 +4537,9 @@ export namespace Prisma {
   export type CourseLookupSelect = {
     id?: boolean
     originalCourseId?: boolean
-    title?: boolean
+    courseName?: boolean
+    courseStartDate?: boolean
+    price?: boolean
     wishLists?: boolean | CourseLookup$wishListsArgs
     createAt?: boolean
     updateAt?: boolean
@@ -14551,7 +14569,9 @@ export namespace Prisma {
   export const CourseLookupScalarFieldEnum: {
     id: 'id',
     originalCourseId: 'originalCourseId',
-    title: 'title',
+    courseName: 'courseName',
+    courseStartDate: 'courseStartDate',
+    price: 'price',
     createAt: 'createAt',
     updateAt: 'updateAt'
   };
@@ -14822,7 +14842,9 @@ export namespace Prisma {
     NOT?: Enumerable<CourseLookupWhereInput>
     id?: StringFilter | string
     originalCourseId?: StringFilter | string
-    title?: StringFilter | string
+    courseName?: StringFilter | string
+    courseStartDate?: StringNullableFilter | string | null
+    price?: StringNullableFilter | string | null
     wishLists?: StudentWishListListRelationFilter
     createAt?: DateTimeFilter | Date | string
     updateAt?: DateTimeFilter | Date | string
@@ -14831,7 +14853,9 @@ export namespace Prisma {
   export type CourseLookupOrderByWithRelationInput = {
     id?: SortOrder
     originalCourseId?: SortOrder
-    title?: SortOrder
+    courseName?: SortOrder
+    courseStartDate?: SortOrder
+    price?: SortOrder
     wishLists?: StudentWishListOrderByRelationAggregateInput
     createAt?: SortOrder
     updateAt?: SortOrder
@@ -14845,7 +14869,9 @@ export namespace Prisma {
   export type CourseLookupOrderByWithAggregationInput = {
     id?: SortOrder
     originalCourseId?: SortOrder
-    title?: SortOrder
+    courseName?: SortOrder
+    courseStartDate?: SortOrder
+    price?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
     _count?: CourseLookupCountOrderByAggregateInput
@@ -14859,7 +14885,9 @@ export namespace Prisma {
     NOT?: Enumerable<CourseLookupScalarWhereWithAggregatesInput>
     id?: StringWithAggregatesFilter | string
     originalCourseId?: StringWithAggregatesFilter | string
-    title?: StringWithAggregatesFilter | string
+    courseName?: StringWithAggregatesFilter | string
+    courseStartDate?: StringNullableWithAggregatesFilter | string | null
+    price?: StringNullableWithAggregatesFilter | string | null
     createAt?: DateTimeWithAggregatesFilter | Date | string
     updateAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -15421,7 +15449,9 @@ export namespace Prisma {
   export type CourseLookupCreateInput = {
     id?: string
     originalCourseId: string
-    title: string
+    courseName: string
+    courseStartDate?: string | null
+    price?: string | null
     wishLists?: StudentWishListCreateNestedManyWithoutCourseLookupInput
     createAt?: Date | string
     updateAt?: Date | string
@@ -15430,7 +15460,9 @@ export namespace Prisma {
   export type CourseLookupUncheckedCreateInput = {
     id?: string
     originalCourseId: string
-    title: string
+    courseName: string
+    courseStartDate?: string | null
+    price?: string | null
     wishLists?: StudentWishListUncheckedCreateNestedManyWithoutCourseLookupInput
     createAt?: Date | string
     updateAt?: Date | string
@@ -15439,7 +15471,9 @@ export namespace Prisma {
   export type CourseLookupUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     originalCourseId?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    courseName?: StringFieldUpdateOperationsInput | string
+    courseStartDate?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: NullableStringFieldUpdateOperationsInput | string | null
     wishLists?: StudentWishListUpdateManyWithoutCourseLookupNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15448,7 +15482,9 @@ export namespace Prisma {
   export type CourseLookupUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     originalCourseId?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    courseName?: StringFieldUpdateOperationsInput | string
+    courseStartDate?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: NullableStringFieldUpdateOperationsInput | string | null
     wishLists?: StudentWishListUncheckedUpdateManyWithoutCourseLookupNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15457,7 +15493,9 @@ export namespace Prisma {
   export type CourseLookupCreateManyInput = {
     id?: string
     originalCourseId: string
-    title: string
+    courseName: string
+    courseStartDate?: string | null
+    price?: string | null
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -15465,7 +15503,9 @@ export namespace Prisma {
   export type CourseLookupUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     originalCourseId?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    courseName?: StringFieldUpdateOperationsInput | string
+    courseStartDate?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15473,7 +15513,9 @@ export namespace Prisma {
   export type CourseLookupUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     originalCourseId?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    courseName?: StringFieldUpdateOperationsInput | string
+    courseStartDate?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16131,7 +16173,9 @@ export namespace Prisma {
   export type CourseLookupCountOrderByAggregateInput = {
     id?: SortOrder
     originalCourseId?: SortOrder
-    title?: SortOrder
+    courseName?: SortOrder
+    courseStartDate?: SortOrder
+    price?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -16139,7 +16183,9 @@ export namespace Prisma {
   export type CourseLookupMaxOrderByAggregateInput = {
     id?: SortOrder
     originalCourseId?: SortOrder
-    title?: SortOrder
+    courseName?: SortOrder
+    courseStartDate?: SortOrder
+    price?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -16147,7 +16193,9 @@ export namespace Prisma {
   export type CourseLookupMinOrderByAggregateInput = {
     id?: SortOrder
     originalCourseId?: SortOrder
-    title?: SortOrder
+    courseName?: SortOrder
+    courseStartDate?: SortOrder
+    price?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -17194,7 +17242,9 @@ export namespace Prisma {
   export type CourseLookupCreateWithoutWishListsInput = {
     id?: string
     originalCourseId: string
-    title: string
+    courseName: string
+    courseStartDate?: string | null
+    price?: string | null
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -17202,7 +17252,9 @@ export namespace Prisma {
   export type CourseLookupUncheckedCreateWithoutWishListsInput = {
     id?: string
     originalCourseId: string
-    title: string
+    courseName: string
+    courseStartDate?: string | null
+    price?: string | null
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -17248,7 +17300,9 @@ export namespace Prisma {
   export type CourseLookupUpdateWithoutWishListsInput = {
     id?: StringFieldUpdateOperationsInput | string
     originalCourseId?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    courseName?: StringFieldUpdateOperationsInput | string
+    courseStartDate?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17256,7 +17310,9 @@ export namespace Prisma {
   export type CourseLookupUncheckedUpdateWithoutWishListsInput = {
     id?: StringFieldUpdateOperationsInput | string
     originalCourseId?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    courseName?: StringFieldUpdateOperationsInput | string
+    courseStartDate?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

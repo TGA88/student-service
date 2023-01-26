@@ -1,10 +1,11 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 // import { customerModel } from "@student-service/crud-core"
-import { PrismaClient } from "@prisma/client";
+// import { PrismaClient } from "@prisma/client";
+import { client } from "@student-service/student-store-prisma";
 // import  multer  from '../../util';
 import * as fs from 'fs';
 
-const client = new PrismaClient()
+// const client = new PrismaClient()
 
 
 
@@ -26,7 +27,7 @@ interface ICustomerModel {
 
 export async function getCustmoer(req:FastifyRequest,reply:FastifyReply) {
     try {
-       const customer = await client.customer.findMany({})
+       const customer = await client.default.customer.findMany({})
        reply.status(200).send(customer)
        console.log(customer)
     }
@@ -43,7 +44,7 @@ export async function getOneCustmoer(req:FastifyRequest<{Params:ICustomerParams 
     console.log(req.params)
     try {
         const id = req.params.id
-       const customer = await client.customer.findFirst({  
+       const customer = await client.default.customer.findFirst({  
         where:{id:parseInt(id)}
     })
        reply.status(200).send(customer)
@@ -59,7 +60,7 @@ export async function getOneCustmoer(req:FastifyRequest<{Params:ICustomerParams 
 export async function postCustmoer(req:FastifyRequest<{Body: ICustomerModel,Headers: IHeaders}>,reply:FastifyReply) {
     console.log(req.body)
     try {
-        const customer  =  await client.customer.create({
+        const customer  =  await client.default.customer.create({
             data: {
                 firstname:req.body.firstname,
                 fullname:req.body.fullname,
@@ -79,7 +80,7 @@ export async function updateCustmoer(req:FastifyRequest<{Params:ICustomerParams 
     console.log(req.body)
     try {
         const id = req.params.id
-        const customer  =  await client.customer.update({
+        const customer  =  await client.default.customer.update({
             where:{id:parseInt(id)},
             data: {
                 firstname:req.body.firstname,
@@ -97,7 +98,7 @@ export async function updateCustmoer(req:FastifyRequest<{Params:ICustomerParams 
 export async function deleteCustmoer(req:FastifyRequest<{Params:ICustomerParams ,Body: ICustomerModel,Headers: IHeaders}>,reply:FastifyReply) {
     try {
         const id = req.params.id
-        const customer = await client.customer.delete({
+        const customer = await client.default.customer.delete({
             where:{id:parseInt(id)}
         })
         reply.status(200).send({messges:"success"})
@@ -139,7 +140,7 @@ export async function uploadfileAndBase64(req: FastifyRequest <{Body: ICustomerM
         try {
             const files = req["file"]
 
-            const customer  =  await client.customer.create({
+            const customer  =  await client.default.customer.create({
                 data: {
                     firstname:req.body.firstname,
                     // fullname:req.body.fullname,

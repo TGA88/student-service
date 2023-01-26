@@ -4,7 +4,9 @@ import { AggregateRoot, UniqueEntityID } from "@inh-lib/ddd"
 export interface CourseLookupAGMProps{
   id?: string,
   originalCourseId: string,
-  title: string,
+  courseName: string,
+  courseStartDate?: string,
+  price?: string,
   wishLists?: string[],
 }
 
@@ -15,8 +17,14 @@ export class CourseLookupAGM extends AggregateRoot<CourseLookupAGMProps>{
   public get originalCourseId(): string {
     return this.props.originalCourseId;
   }
-  public get title(): string {
-    return this.props.title;
+  public get courseName(): string {
+    return this.props.courseName;
+  }
+  public get courseStartDate(): string {
+    return this.props.courseStartDate as string;
+  }
+  public get price(): string {
+    return this.props.price as string;
   }
   public get wishLists(): string[] {
     return this.props.wishLists as string[]
@@ -30,7 +38,7 @@ export class CourseLookupAGM extends AggregateRoot<CourseLookupAGMProps>{
   ): Result<CourseLookupAGM>{
     const guardProps = [
       { argument: props.originalCourseId, argumentName: 'originalCourseId' },
-      { argument: props.title, argumentName: 'title' },
+      { argument: props.courseName, argumentName: 'courseName' },
     ];
     const guardResult = Guard.againstNullOrUndefinedBulk(guardProps);
     if (!guardResult.succeeded) {

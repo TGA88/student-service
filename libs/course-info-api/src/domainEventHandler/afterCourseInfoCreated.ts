@@ -1,15 +1,16 @@
 import { DomainEvents, IEventHandler, IHandle } from "@inh-lib/ddd";
 import { CourseInfoCreatedEvent } from "@student-service/course-info-core";
+import { Producer } from "kafkajs";
 
 
 
 
 
-export class AfterCourseInoCreated implements IHandle , IEventHandler<CourseInfoCreatedEvent> {
-  private broker: unknown;
+export class AfterCourseInfoCreated implements IHandle , IEventHandler<CourseInfoCreatedEvent> {
+  private broker: Producer;
 
-  constructor (broker: unknown) {
-    this.setupSubscriptions();
+  constructor (broker: Producer) {
+    this.setupSubscriptions;
     this.broker = broker;
   }
 
@@ -29,7 +30,28 @@ export class AfterCourseInoCreated implements IHandle , IEventHandler<CourseInfo
   private async onCourseInfoCreatedEvent (event: CourseInfoCreatedEvent): Promise<void> {
     const { courseInfoAGM} = event;
 
-    console.log("onCourseInfoCreatedEvent////////////////////////////")
+    console.log("onCourseInfoCreatedEvent-executed!")
+    console.log("AGM",courseInfoAGM)
+    const body = {
+      eventName: "course-create",
+      eventData: {
+        originalCourseId: courseInfoAGM.id.toValue(),
+        courseName: courseInfoAGM.props.courseName,
+        courseStartDate: courseInfoAGM.props.courseStartDate,
+        price: courseInfoAGM.props.price
+      }
+    }
+
+    // console.log("BROKER",this.broker)
+
+    let sent = await this.broker.send({
+      topic: "courseinfo",
+      messages:[{
+        value: JSON.stringify(body)
+      }]
+    })
+
+    console.log("SENT",sent)
 
     //  broker.publish(eventName,eventData(courseInfoAGM))
 

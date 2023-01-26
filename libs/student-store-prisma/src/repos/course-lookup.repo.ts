@@ -12,13 +12,15 @@ export class CourseLookupRepoEmpl implements CourseLookupRepo {
   }
   async create(profileAGM: CourseLookupAGM): Promise<Result<CourseLookupAGM>> {
     try {
-      const ttt: Prisma.CourseLookupCreateInput = {
+      const item: Prisma.CourseLookupCreateInput = {
         originalCourseId: profileAGM.originalCourseId,
-        title: profileAGM.title
+        courseName: profileAGM.courseName,
+        courseStartDate: profileAGM.courseStartDate,
+        price: profileAGM.price,
       }
-      console.log(ttt)
+
       const create = await client.courseLookup.create({
-        data: ttt
+        data: item
       })
       return Result.ok<CourseLookupAGM>(profileAGM);
     } catch (error) {

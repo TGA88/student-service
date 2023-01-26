@@ -1,6 +1,6 @@
-// import { AfterCourseInoCreated } from "@student-service/course-info-api"
+// import { AfterCourseInfoCreated } from "@student-service/course-info-api"
 
 // const broker: any = {}
-// const afterCourseInfoCreated = new AfterCourseInoCreated(broker)
+// const afterCourseInfoCreated = new AfterCourseInfoCreated(broker)
 
 // afterCourseInfoCreated.setupSubscriptions()

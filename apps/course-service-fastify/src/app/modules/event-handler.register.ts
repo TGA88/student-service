@@ -1,6 +1,7 @@
-import { AfterCourseInoCreated } from "@student-service/course-info-api";
+import { AfterCourseInfoCreated } from "@student-service/course-info-api";
+import { Producer } from "kafkajs";
 
-export default function register(broker:unknown):void{
-  const courseCreated = new AfterCourseInoCreated(broker)
+export default function register(broker:Producer):void{
+  const courseCreated = new AfterCourseInfoCreated(broker)
   courseCreated.setupSubscriptions()
 }

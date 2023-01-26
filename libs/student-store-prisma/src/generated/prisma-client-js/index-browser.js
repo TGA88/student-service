@@ -112,7 +112,9 @@ exports.Prisma.CategoryScalarFieldEnum = makeEnum({
 exports.Prisma.CourseLookupScalarFieldEnum = makeEnum({
   id: 'id',
   originalCourseId: 'originalCourseId',
-  title: 'title',
+  courseName: 'courseName',
+  courseStartDate: 'courseStartDate',
+  price: 'price',
   createAt: 'createAt',
   updateAt: 'updateAt'
 });

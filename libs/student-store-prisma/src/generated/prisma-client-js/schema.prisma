@@ -43,7 +43,9 @@ model StudentWishList {
 model CourseLookup {
   id               String            @id @default(uuid())
   originalCourseId String            @unique
-  title            String            @db.VarChar(255)
+  courseName       String            @db.VarChar(255)
+  courseStartDate  String?
+  price            String?
   wishLists        StudentWishList[]
   createAt         DateTime          @default(now())
   updateAt         DateTime          @updatedAt

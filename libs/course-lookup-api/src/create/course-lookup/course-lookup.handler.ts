@@ -31,7 +31,7 @@ export class CourseLookupHandler implements UseCase<CreateCourseLookupInputDTO,P
       return left(new GenericAppError.UnexpectedError(createOrError.error))
     }
     console.log("ccc",createOrError.getValue())
-    const test="200"
+    
     return right(Result.ok<any>(createOrError.getValue()))
   }
 }

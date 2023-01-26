@@ -1,7 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { userModel } from "@student-service/crud-core"
-import { PrismaClient } from "@prisma/client";
-const client = new PrismaClient()
+// import { PrismaClient } from "@prisma/client";
+import { client } from "@student-service/student-store-prisma";
+// const client = new PrismaClient()
 
 interface IUserQuery{
     query: any 
@@ -19,7 +20,7 @@ interface IUserQuery{
 export async function login(req:FastifyRequest<{Body:IUserModel}>,reply:FastifyReply) {
 
     // const {username,password} = req.body
-    // const user = await client.user.findFirst({
+    // const user = await client.default.user.findFirst({
     //     where: {
     //         username:username,
     //       }
@@ -41,7 +42,7 @@ export async function getUser(req:FastifyRequest,reply:FastifyReply) {
 export async function createUser(req:FastifyRequest<{Body: IUserModel,Headers: IHeaders}>,reply:FastifyReply) {
     // console.log(req)
     // try {
-    //     const user  =  await client.user.create({
+    //     const user  =  await client.default.user.create({
     //         data: {
     //             username:req.body.username,
     //             password:req.body.password

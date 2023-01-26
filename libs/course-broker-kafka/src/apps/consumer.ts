@@ -5,7 +5,8 @@ import { consumers } from "stream";
 export interface kafkaConsumerSetup {
   clientId?: string,
   brokers: string[],
-  groupId: string
+  groupId: string,
+  topics: string[]
 }
 
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -27,6 +28,12 @@ export async function consumer(config: kafkaConsumerSetup): Promise<Consumer> {
     })
 
     await consumer.connect().then(() => console.log("Connected Consumer"))
+
+    consumer.subscribe({
+      topics: config.topics,
+      fromBeginning: true
+    })
+
     return consumer
   } catch (error) {
     console.error("Kafka Consumer Error",error);
