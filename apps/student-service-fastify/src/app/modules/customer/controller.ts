@@ -14,8 +14,12 @@ interface ICustomerParams {
   }
 
 interface ICustomerModel {
-    firstname: string;
-    fullname: string;
+    name: string;
+    surname: string;
+    email:string
+    tel:string
+    id_card:string
+    bookbank:string
   }
   interface ITestModel {
     img: string;
@@ -45,7 +49,7 @@ export async function getOneCustmoer(req:FastifyRequest<{Params:ICustomerParams 
     try {
         const id = req.params.id
        const customer = await client.customer.findFirst({  
-        where:{id:parseInt(id)}
+        where:{id:id}
     })
        reply.status(200).send(customer)
     }
@@ -58,15 +62,32 @@ export async function getOneCustmoer(req:FastifyRequest<{Params:ICustomerParams 
 }
 
 export async function postCustmoer(req:FastifyRequest<{Body: ICustomerModel,Headers: IHeaders}>,reply:FastifyReply) {
-    console.log(req.body)
+    //@ts-ignore
+    const userData = req.body.user.dataUser 
+    //@ts-ignore
+    const provider = req.body.user.provider_login
+
     try {
         const customer  =  await client.customer.create({
             data: {
-                firstname:req.body.firstname,
-                fullname:req.body.fullname,
+                name:userData.name,
+                surname:userData.surname,
+                email:userData.email,
+                tel:userData.tel,
+                id_card:userData.id_card,
+                bookbank:userData.bookbank,
+                loingProvider:{create:{
+                    displayName:provider.displayName,
+                    providerSource:provider.providerSource,
+                    providerType:provider.providerType,
+                    providerLoginImgurl:provider.img,
+                    providerUid:provider.providerUid,
+                }}
             }
         });
-        reply.status(200).send(customer)
+        const getId = await client.customer.findFirst({where: { id: customer.id},include:{loingProvider:true}})
+        console.log(getId)
+        reply.status(200).send(getId)
     }
     catch (e) {
         console.log(e)
@@ -80,14 +101,14 @@ export async function updateCustmoer(req:FastifyRequest<{Params:ICustomerParams 
     console.log(req.body)
     try {
         const id = req.params.id
-        const customer  =  await client.customer.update({
-            where:{id:parseInt(id)},
-            data: {
-                firstname:req.body.firstname,
-                fullname:req.body.fullname
-            }
-        });
-        reply.status(200).send(customer)
+        // const customer  =  await client.customer.update({
+        //     where:{id:parseInt(id)},
+        //     data: {
+        //         firstname:req.body.name,
+        //         fullname:req.body.surname
+        //     }
+        // });
+        // reply.status(200).send(customer)
     }
     catch (e) {
         console.log(e)
@@ -98,8 +119,11 @@ export async function updateCustmoer(req:FastifyRequest<{Params:ICustomerParams 
 export async function deleteCustmoer(req:FastifyRequest<{Params:ICustomerParams ,Body: ICustomerModel,Headers: IHeaders}>,reply:FastifyReply) {
     try {
         const id = req.params.id
+        console.log(id)
         const customer = await client.customer.delete({
-            where:{id:parseInt(id)}
+            // where:{id:parseInt(id)}
+            where:{id:id}
+
         })
         reply.status(200).send({messges:"success"})
      }
