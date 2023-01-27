@@ -62,8 +62,10 @@ export async function getOneCustmoer(req:FastifyRequest<{Params:ICustomerParams 
 }
 
 export async function postCustmoer(req:FastifyRequest<{Body: ICustomerModel,Headers: IHeaders}>,reply:FastifyReply) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     const userData = req.body.user.dataUser 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     const provider = req.body.user.provider_login
 
