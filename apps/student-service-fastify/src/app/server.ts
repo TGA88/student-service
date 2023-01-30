@@ -6,6 +6,12 @@ import registerAppRoutes  from "./modules/routes";
 import initialDomainEventHandler from "./modules/event-handler.register";
 import cors from "@fastify/cors";
 
+declare module "fastify" {
+  interface FastifyInstance {
+    jwtAuth: (fastify: FastifyInstance,next: any) => void
+  }
+}
+
 const server = Fastify()
 server.register(cors)
 server.register(multer.contentParser)
@@ -14,6 +20,7 @@ server.get('/healthcheck', async function () {
 })
 
 const broker:unknown ={}
+
 registerAppRoutes(server)
 initialDomainEventHandler(broker)
 
