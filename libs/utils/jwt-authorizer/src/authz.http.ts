@@ -1,3 +1,4 @@
+import axios from 'axios';
 import * as jwt from 'jsonwebtoken';
 import { VerifyOptions, JwtHeader } from 'jsonwebtoken';
 import * as jwksClient from 'jwks-rsa';
@@ -26,6 +27,27 @@ export interface IDecode {
   header: JwtHeader;
   payload: IPayload;
   signature: string;
+}
+
+export interface AxAuthzOptions {
+  jwksUri: string;
+  audience: string;
+  tokenIssuer: string;
+}
+
+export interface ILineVerifyResponse {
+  client_id: string,
+  expires_in: number,
+  scope: string
+}
+
+export interface IGetLineProfile {
+  userId: string,
+  displayName: string,
+  pictureUrl: string
+}
+export interface ILineConfig {
+  clientId: string
 }
 
 const getToken = (header: string[]): string => {
@@ -70,21 +92,22 @@ async function getSigningKey(kid: string): Promise<string> {
 }
 
 export type AxHttpAuthorizer = typeof authorize;
-export interface AxAuthzOptions {
-  jwksUri: string;
-  audience: string;
-  tokenIssuer: string;
-}
+
 
 export const authzOptions: AxAuthzOptions = {
   // azure ad
   // jwksUri: "https://login.microsoftonline.com/52f315ba-de63-468c-87c7-a8247c35c604/.well-known/openid-configuration",
-  
+  // jwksUri: "https://login.microsoftonline.com/52f315ba-de63-468c-87c7-a8247c35c604/discovery/keys",
   jwksUri: "https://login.microsoftonline.com/52f315ba-de63-468c-87c7-a8247c35c604/discovery/v2.0/keys",
+  audience: "26f0af73-c0b2-4811-b2ee-6d4ee8c835ef",
+  tokenIssuer: "https://login.microsoftonline.com/52f315ba-de63-468c-87c7-a8247c35c604/v2.0"
+
   // auth 0
-  audience: "api://c948752c-6ae8-4096-9c9d-4e34ad04bb52",
   // jwksUri: "https://dev--ugecqjm.us.auth0.com/.well-known/jwks.json",
-  tokenIssuer: "https://sts.windows.net/52f315ba-de63-468c-87c7-a8247c35c604/"
+}
+
+export const lineOptions: ILineConfig = {
+  clientId: "1657834302"
 }
 
 export function makeAuthorizer(
@@ -98,17 +121,14 @@ export function makeAuthorizer(
 }
 
 async function authorize(): Promise<IPayload> {
-  console.log("test", this.headers)
   const headers = this.headers
   const authzOptions = this.authzOptions
-  console.log("authorize work")
   const token = getToken(headers);
   const decoded = jwt.decode(token, { complete: true }) as IDecode;
   if (!decoded || !decoded.header || !decoded.header.kid) {
     // TODO: Custom authorizer must return fix wording or object
     throw new Error('Unauthorized');
   }
-
 
   const signingKey = await getSigningKey(decoded.header.kid);
 
@@ -129,9 +149,9 @@ async function getSigningKey2(kid: string): Promise<string> {
     jwksUri: authzOptions.jwksUri,
   });
   try {
-    console.log("kid",kid)
+    console.log("kid", kid)
     const signingKey: SigningKey = await client.getSigningKey(kid);
-    console.log("signingKey",signingKey)
+    console.log("signingKey", signingKey)
     if ('publicKey' in signingKey) {
       console.log("publicKey")
       return signingKey.publicKey;
@@ -144,18 +164,49 @@ async function getSigningKey2(kid: string): Promise<string> {
       'Get signing key success. But parsed payload not found `publicKey` or `rsaPublicKey`'
     );
   } catch (error) {
-    console.log("error at get signkey",error)
+    console.log("error at get signkey", error)
   }
 
 
   throw new Error('Unauthorized');
 }
 
-export async function authorize2(headers: any, authzOptions: any): Promise<IPayload> {
+// https://developers.line.biz/en/docs/line-login/secure-login-process/#using-access-tokens
+// method 1 
+async function verifyLineToken(accessToken: string): Promise<any> {
+  try {
+    console.log("access_token",accessToken)
+    let verify = await axios.get(`https://api.line.me/oauth2/v2.1/verify?access_token=${accessToken}`)
+    if (verify.data.client_id === lineOptions.clientId) {
+      let getProfile = await axios.get(
+        "https://api.line.me/v2/profile", {
+        headers: {
+          'authorization': `Bearer ${accessToken}`
+        }
+      })
+      return getProfile.data
+    }
+  } catch (error) {
+    console.error("Error in verifyLineToken", error)
+    throw new Error('Unauthorized');
+  }
+
+}
+
+//method 2 
+async function verifyLineTokenOpenID(): Promise<any>{
+  
+}
+
+export async function authorize2(headers: any): Promise<IPayload> {
   console.log("test", headers)
-  console.log("authorize work")
   const token = getToken(headers);
   console.log("token", token)
+  if (headers['login-type'] === "line"){
+    const verified = await verifyLineToken(token) 
+    return verified
+  }
+
   const decoded = jwt.decode(token, { complete: true }) as IDecode;
   console.log("DECODED", decoded)
   if (!decoded || !decoded.header || !decoded.header.kid) {
@@ -170,6 +221,6 @@ export async function authorize2(headers: any, authzOptions: any): Promise<IPayl
     audience: authzOptions.audience,
   };
   const verified = jwt.verify(token, signingKey, jwtOption) as IPayload;
-  console.log("verified",verified)
+  console.log("verified", verified)
   return verified;
 };
