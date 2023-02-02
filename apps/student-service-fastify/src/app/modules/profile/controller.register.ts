@@ -22,6 +22,7 @@ export async function registerHandler(req: FastifyRequest, res: FastifyReply) {
     const result = await handler.execute(dto);
     registerResponseDTOToHttp(result, res);
   } catch (error) {
+    console.error("Error In Controller",error)
     res.status(400);
   }
 }

@@ -49,7 +49,7 @@ describe('Test parseAGMToSuccessDTO', () => {
     code: 1,
     fullName: "name",
     address: "abc",
-    mobileNo: PhoneNoVO.createVO({phoneNo:'0123456789'}).getValue() as PhoneNoVO,
+    mobilePhone: PhoneNoVO.createVO({phoneNo:'0123456789'}).getValue() as PhoneNoVO,
     birthDate: new Date(2000,1,1)
   }
 

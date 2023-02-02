@@ -12,9 +12,9 @@ export class AfterProfileCreated implements IHandle , IEventHandler<StudentProfi
     this.setupSubscriptions();
     this.broker = broker;
   }
-    handle(event: StudentProfileCreatedEvent): void {
-       this.onStudentProfileCreatedEvent(event)
-    }
+  async handle(event: StudentProfileCreatedEvent): Promise<void> {
+      this.onStudentProfileCreatedEvent(event)
+  }
 
   setupSubscriptions(): void {
     DomainEvents.register(this.onStudentProfileCreatedEvent.bind(this), StudentProfileCreatedEvent.name);

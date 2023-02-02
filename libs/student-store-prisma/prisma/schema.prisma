@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/prisma-client-js"
 }
 
 datasource db {
@@ -26,7 +27,7 @@ model StudentProfile {
   birthDate   DateTime?
   wishLists   StudentWishList[]
   createAt    DateTime          @default(now())
-  updateAt    DateTime?          @updatedAt
+  updateAt    DateTime?         @updatedAt
 }
 
 //Student_wish_list
@@ -42,7 +43,9 @@ model StudentWishList {
 model CourseLookup {
   id               String            @id @default(uuid())
   originalCourseId String            @unique
-  title            String            @db.VarChar(255)
+  courseName       String            @db.VarChar(255)
+  courseStartDate  String?
+  price            String?
   wishLists        StudentWishList[]
   createAt         DateTime          @default(now())
   updateAt         DateTime          @updatedAt
@@ -135,30 +138,30 @@ model BooksOnAuthors {
 //#####################################################################
 
 model Customer {
-  id        String      @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name String   @db.VarChar(255)
-  surname  String   @db.VarChar(255)
-  tel  String   @db.VarChar(255) 
-  email  String   @db.VarChar(255)
-  id_card String   @db.VarChar(255)
-  bookbank String   @db.VarChar(255)
+  id            String          @id @default(uuid())
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  name          String          @db.VarChar(255)
+  surname       String          @db.VarChar(255)
+  tel           String          @db.VarChar(255)
+  email         String          @db.VarChar(255)
+  id_card       String          @db.VarChar(255)
+  bookbank      String          @db.VarChar(255)
   loingProvider LoingProvider[]
 }
-model LoingProvider {
-  id String @id @default(uuid())
-  providerSource  String @db.VarChar(255)
-  providerType String @db.VarChar(255)
-  providerUid String @db.VarChar(255)
-  displayName String @db.VarChar(255)
-  providerLoginImgurl String @db.VarChar(255)
-  createAt DateTime @default(now())
-  updateAt DateTime @updatedAt
-  custmer  Customer  @relation(fields: [customerId], references: [id])
-  customerId String
-}
 
+model LoingProvider {
+  id                  String   @id @default(uuid())
+  providerSource      String   @db.VarChar(255)
+  providerType        String   @db.VarChar(255)
+  providerUid         String   @db.VarChar(255)
+  displayName         String   @db.VarChar(255)
+  providerLoginImgurl String   @db.VarChar(255)
+  createAt            DateTime @default(now())
+  updateAt            DateTime @updatedAt
+  custmer             Customer @relation(fields: [customerId], references: [id])
+  customerId          String
+}
 
 // model Car {
 //   id Int  @id @default(autoincrement())
@@ -189,4 +192,3 @@ model Product {
 //   username String @db.VarChar(255)
 //   password String @db.VarChar(255)
 // }
-

@@ -15,7 +15,7 @@ import {
   ProfileAGMProps,
 } from '@student-service/student-profile-core';
 import { Result } from '@inh-lib/common';
-import { StudentProfile } from '@prisma/client';
+import { StudentProfile } from '../../../generated/prisma-client-js';
 
 describe('Test StudentProfileRepoEmpl.create', () => {
   const repo: StudentProfileRepoEmpl = new StudentProfileRepoEmpl();
@@ -23,7 +23,7 @@ describe('Test StudentProfileRepoEmpl.create', () => {
     code: 0,
     fullName: 'name',
     address: 'abn1',
-    mobileNo: PhoneNoVO.createVO({
+    mobilePhone: PhoneNoVO.createVO({
       phoneNo: '0123456789',
     }).getValue() as PhoneNoVO,
     birthDate: new Date(2000, 1, 1),
@@ -68,6 +68,7 @@ describe('Test StudentProfileRepoEmpl.create', () => {
   });
 
   it('fail when Parse Prisma Model to AGM', async() => {
+    console.log("calll")
     const mockMap = jest.mocked(agmToStudentProfileCreateInput);
     mockMap.mockReturnValue(Result.ok());
 
@@ -84,7 +85,7 @@ describe('Test StudentProfileRepoEmpl.create', () => {
         fullName: '',
         address: null,
         homePhone: null,
-        mobilePhone: null,
+        mobilePhone: "1",
         birthDate: null,
         createAt: new Date(),
         updateAt: null
@@ -94,6 +95,7 @@ describe('Test StudentProfileRepoEmpl.create', () => {
     prismaMock.studentProfile.create.mockResolvedValue(m)
     const res  = await repo.create(agm)
 
+    // expect(mockMap).toHaveBeenCalled()
     expect(mockMapToAGM).toHaveBeenCalled()
     expect(res.isSuccess).toBeTruthy()
       

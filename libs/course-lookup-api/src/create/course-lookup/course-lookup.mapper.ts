@@ -8,7 +8,9 @@ export const parseReqToDTO: CourseLookupAGMParser<CreateCourseLookupInputDTO> = 
   try {
     const props: CourseLookupAGMProps = {
       originalCourseId: rawData.originalCourseId,
-      title: rawData.title,
+      courseName: rawData.courseName,
+      courseStartDate: rawData.courseStartDate,
+      price: rawData.price,
       wishLists: rawData.wishLists
     }
     const agmOrError = CourseLookupAGM.create(props)

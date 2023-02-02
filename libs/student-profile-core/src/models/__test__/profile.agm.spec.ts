@@ -7,7 +7,7 @@ describe('Test profileAGM', () => {
         code: 0,
         fullName: 'me',
         address:'asdfagsdfgkm',
-        mobileNo: PhoneNoVO.createVO({ phoneNo: '0123456789' }).getValue() as PhoneNoVO,
+        mobilePhone: PhoneNoVO.createVO({ phoneNo: '0123456789' }).getValue() as PhoneNoVO,
         birthDate: new Date(2000,1,1),
       };
 
@@ -22,7 +22,7 @@ describe('Test profileAGM', () => {
             code: 0,
             fullName: '',
             address:'abc',
-            mobileNo: PhoneNoVO.createVO({ phoneNo: '0123456789' }).getValue() as PhoneNoVO,
+            mobilePhone: PhoneNoVO.createVO({ phoneNo: '0123456789' }).getValue() as PhoneNoVO,
             birthDate: new Date(2000,1,1),
           };
     
@@ -35,7 +35,7 @@ describe('Test profileAGM', () => {
             code: 0,
             fullName: 'abc',
             address:'',
-            mobileNo: PhoneNoVO.createVO({ phoneNo: '0123456789' }).getValue() as PhoneNoVO,
+            mobilePhone: PhoneNoVO.createVO({ phoneNo: '0123456789' }).getValue() as PhoneNoVO,
             birthDate: new Date(2000,1,1),
           };
     

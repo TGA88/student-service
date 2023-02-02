@@ -1,11 +1,12 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 // import { customerModel } from "@student-service/crud-core"
-import { PrismaClient } from "@prisma/client";
+// import { PrismaClient } from "@prisma/client";
+import { client } from "@student-service/student-store-prisma";
 // import  multer  from '../../util';
 import * as fs from 'fs';
 import path = require("path");
 
-const client = new PrismaClient()
+// const client = new PrismaClient()
 
 
 
@@ -31,7 +32,7 @@ interface ICustomerModel {
 
 export async function getCustmoer(req:FastifyRequest,reply:FastifyReply) {
     try {
-       const customer = await client.customer.findMany({})
+       const customer = await client.default.customer.findMany({})
        reply.status(200).send(customer)
        console.log(customer)
     }
@@ -48,8 +49,8 @@ export async function getOneCustmoer(req:FastifyRequest<{Params:ICustomerParams 
     console.log(req.params)
     try {
         const id = req.params.id
-       const customer = await client.customer.findFirst({  
-        where:{id:id}
+       const customer = await client.default.customer.findFirst({  
+        where:{id:parseInt(id)}
     })
        reply.status(200).send(customer)
     }
@@ -70,7 +71,7 @@ export async function postCustmoer(req:FastifyRequest<{Body: ICustomerModel,Head
     const provider = req.body.user.provider_login
 
     try {
-        const customer  =  await client.customer.create({
+        const customer  =  await client.default.customer.create({
             data: {
                 name:userData.name,
                 surname:userData.surname,
@@ -103,14 +104,14 @@ export async function updateCustmoer(req:FastifyRequest<{Params:ICustomerParams 
     console.log(req.body)
     try {
         const id = req.params.id
-        // const customer  =  await client.customer.update({
-        //     where:{id:parseInt(id)},
-        //     data: {
-        //         firstname:req.body.name,
-        //         fullname:req.body.surname
-        //     }
-        // });
-        // reply.status(200).send(customer)
+        const customer  =  await client.default.customer.update({
+            where:{id:parseInt(id)},
+            data: {
+                firstname:req.body.firstname,
+                fullname:req.body.fullname
+            }
+        });
+        reply.status(200).send(customer)
     }
     catch (e) {
         console.log(e)
@@ -121,11 +122,8 @@ export async function updateCustmoer(req:FastifyRequest<{Params:ICustomerParams 
 export async function deleteCustmoer(req:FastifyRequest<{Params:ICustomerParams ,Body: ICustomerModel,Headers: IHeaders}>,reply:FastifyReply) {
     try {
         const id = req.params.id
-        console.log(id)
-        const customer = await client.customer.delete({
-            // where:{id:parseInt(id)}
-            where:{id:id}
-
+        const customer = await client.default.customer.delete({
+            where:{id:parseInt(id)}
         })
         reply.status(200).send({messges:"success"})
      }
@@ -183,10 +181,15 @@ export async function uploadfileEncode(req: FastifyRequest <{Body: ICustomerMode
 
     export async function uploadfileAndBody(req: FastifyRequest <{Body: ICustomerModel,Headers: IHeaders}> ,reply:FastifyReply) {
         try {
-            // send from postman
-            // const files = req["file"]
+            const files = req["file"]
 
-            const files = req.body
+            const customer  =  await client.default.customer.create({
+                data: {
+                    firstname:req.body.firstname,
+                    // fullname:req.body.fullname,
+                    fullname:files,
+                }
+            });
             console.log(files)
         //     const tempFile = path.join(__dirname,`../../images/${files["fileName"]}`)
         //     console.log(tempFile)

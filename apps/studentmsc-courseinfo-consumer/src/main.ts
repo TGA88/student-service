@@ -1,4 +1,4 @@
-// import * as server from "./app/server";
+import * as server from "./app/server";
 // import * as producer from "./app/producer"
 import * as consumer from "./app/consumer"
 

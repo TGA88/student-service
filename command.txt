@@ -26,5 +26,13 @@ npx prisma migrate diff --from-schema-datamodel prisma/schema.prisma --to-schema
  execute migrate down script
  npx prisma db execute --file [{directory of}./down.sql] --schema prisma/schema.prisma
 
-
  npx prisma migrate resolve --rolled-back 20230113114307_test
+
+ -----
+ prisma หาก custom generate แล้วใช้งานไม่ได้ให้ไปที่ /prisma-client-js ที่ gen ออกมา
+ แล้วไปที่ไฟล์ index.js ใน function findSync จะมี path     
+ "prisma/generated/prisma-client-js",
+ "generated/prisma-client-js",
+ให้แก้เป็น path เต็มเช่น
+  "libs/student-store-prisma/src/generated/prisma-client-js",
+  "student-store-prisma/src/generated/prisma-client-js",

@@ -456,9 +456,9 @@
   integrity sha512-yhmP3R9evcQFlvFF7NHP2+l6OaPwff771RglZkqcPGAm+lAI773QRGDyLiVugbfurtWOiPLtRe4uAxsyJZxSPg==
 
 "@inh-lib/ddd@^0.2.0":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@inh-lib/ddd/-/ddd-0.2.1.tgz#c07e82784b35f7533adb97b5a4fa4b4b067ad738"
-  integrity sha512-oRvjEiKT8Ki4fZFgHr2B6+tdqzzAqx3tFqJT81e5maep0MS48E8CRzzaxyU2Xla8y9hT8GDHoHvr+BLVKTcPsA==
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@inh-lib/ddd/-/ddd-0.2.2.tgz#8855f35a06fc21af1a01b6378798e8f19cfdcffe"
+  integrity sha512-rSqQDKd9lwyozZ3UXpHN7tjFn9NJZ06HhqzkOLzwFYPWaRZIW92EQHguA6r+K3TX/CamNscpLx3+rHNlF1uqNw==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
@@ -2023,6 +2023,15 @@ axios@^1.0.0:
   version "1.2.1"
   resolved "https://registry.npmjs.org/axios/-/axios-1.2.1.tgz"
   integrity sha512-I88cFiGu9ryt/tfVEi4kX2SITsvDddTajXTOFmt2uK1ZVA8LytjtdeyefdQWEf5PU8w+4SSJDoYnggflB5tW4A==
+  dependencies:
+    follow-redirects "^1.15.0"
+    form-data "^4.0.0"
+    proxy-from-env "^1.1.0"
+
+axios@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.3.tgz#31a3d824c0ebf754a004b585e5f04a5f87e6c4ff"
+  integrity sha512-pdDkMYJeuXLZ6Xj/Q5J3Phpe+jbGdsSzlQaFVkMQzRUL05+6+tetX8TV3p4HrU4kzuO9bt+io/yGQxuyxA/xcw==
   dependencies:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"
