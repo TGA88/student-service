@@ -137,11 +137,31 @@ export type BooksOnAuthors = {
  * 
  */
 export type Customer = {
-  id: number
+  id: string
   createdAt: Date
   updatedAt: Date
-  firstname: string
-  fullname: string
+  name: string
+  surname: string
+  tel: string
+  email: string
+  id_card: string
+  bookbank: string
+}
+
+/**
+ * Model LoingProvider
+ * 
+ */
+export type LoingProvider = {
+  id: string
+  providerSource: string
+  providerType: string
+  providerUid: string
+  displayName: string
+  providerLoginImgurl: string
+  createAt: Date
+  updateAt: Date
+  customerId: string
 }
 
 /**
@@ -408,6 +428,16 @@ export class PrismaClient<
     * ```
     */
   get customer(): Prisma.CustomerDelegate<GlobalReject>;
+
+  /**
+   * `prisma.loingProvider`: Exposes CRUD operations for the **LoingProvider** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LoingProviders
+    * const loingProviders = await prisma.loingProvider.findMany()
+    * ```
+    */
+  get loingProvider(): Prisma.LoingProviderDelegate<GlobalReject>;
 
   /**
    * `prisma.product`: Exposes CRUD operations for the **Product** model.
@@ -914,6 +944,7 @@ export namespace Prisma {
     Author: 'Author',
     BooksOnAuthors: 'BooksOnAuthors',
     Customer: 'Customer',
+    LoingProvider: 'LoingProvider',
     Product: 'Product'
   };
 
@@ -1383,6 +1414,50 @@ export namespace Prisma {
      * 
     **/
     select?: AuthorCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type CustomerCountOutputType
+   */
+
+
+  export type CustomerCountOutputType = {
+    loingProvider: number
+  }
+
+  export type CustomerCountOutputTypeSelect = {
+    loingProvider?: boolean
+  }
+
+  export type CustomerCountOutputTypeGetPayload<S extends boolean | null | undefined | CustomerCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? CustomerCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (CustomerCountOutputTypeArgs)
+    ? CustomerCountOutputType 
+    : S extends { select: any } & (CustomerCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof CustomerCountOutputType ? CustomerCountOutputType[P] : never
+  } 
+      : CustomerCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * CustomerCountOutputType without action
+   */
+  export type CustomerCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the CustomerCountOutputType
+     * 
+    **/
+    select?: CustomerCountOutputTypeSelect | null
   }
 
 
@@ -12608,76 +12683,82 @@ export namespace Prisma {
 
   export type AggregateCustomer = {
     _count: CustomerCountAggregateOutputType | null
-    _avg: CustomerAvgAggregateOutputType | null
-    _sum: CustomerSumAggregateOutputType | null
     _min: CustomerMinAggregateOutputType | null
     _max: CustomerMaxAggregateOutputType | null
   }
 
-  export type CustomerAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type CustomerSumAggregateOutputType = {
-    id: number | null
-  }
-
   export type CustomerMinAggregateOutputType = {
-    id: number | null
+    id: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    firstname: string | null
-    fullname: string | null
+    name: string | null
+    surname: string | null
+    tel: string | null
+    email: string | null
+    id_card: string | null
+    bookbank: string | null
   }
 
   export type CustomerMaxAggregateOutputType = {
-    id: number | null
+    id: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    firstname: string | null
-    fullname: string | null
+    name: string | null
+    surname: string | null
+    tel: string | null
+    email: string | null
+    id_card: string | null
+    bookbank: string | null
   }
 
   export type CustomerCountAggregateOutputType = {
     id: number
     createdAt: number
     updatedAt: number
-    firstname: number
-    fullname: number
+    name: number
+    surname: number
+    tel: number
+    email: number
+    id_card: number
+    bookbank: number
     _all: number
   }
 
-
-  export type CustomerAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type CustomerSumAggregateInputType = {
-    id?: true
-  }
 
   export type CustomerMinAggregateInputType = {
     id?: true
     createdAt?: true
     updatedAt?: true
-    firstname?: true
-    fullname?: true
+    name?: true
+    surname?: true
+    tel?: true
+    email?: true
+    id_card?: true
+    bookbank?: true
   }
 
   export type CustomerMaxAggregateInputType = {
     id?: true
     createdAt?: true
     updatedAt?: true
-    firstname?: true
-    fullname?: true
+    name?: true
+    surname?: true
+    tel?: true
+    email?: true
+    id_card?: true
+    bookbank?: true
   }
 
   export type CustomerCountAggregateInputType = {
     id?: true
     createdAt?: true
     updatedAt?: true
-    firstname?: true
-    fullname?: true
+    name?: true
+    surname?: true
+    tel?: true
+    email?: true
+    id_card?: true
+    bookbank?: true
     _all?: true
   }
 
@@ -12724,18 +12805,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: CustomerAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: CustomerSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: CustomerMinAggregateInputType
@@ -12766,22 +12835,22 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: CustomerCountAggregateInputType | true
-    _avg?: CustomerAvgAggregateInputType
-    _sum?: CustomerSumAggregateInputType
     _min?: CustomerMinAggregateInputType
     _max?: CustomerMaxAggregateInputType
   }
 
 
   export type CustomerGroupByOutputType = {
-    id: number
+    id: string
     createdAt: Date
     updatedAt: Date
-    firstname: string
-    fullname: string
+    name: string
+    surname: string
+    tel: string
+    email: string
+    id_card: string
+    bookbank: string
     _count: CustomerCountAggregateOutputType | null
-    _avg: CustomerAvgAggregateOutputType | null
-    _sum: CustomerSumAggregateOutputType | null
     _min: CustomerMinAggregateOutputType | null
     _max: CustomerMaxAggregateOutputType | null
   }
@@ -12804,21 +12873,37 @@ export namespace Prisma {
     id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    firstname?: boolean
-    fullname?: boolean
+    name?: boolean
+    surname?: boolean
+    tel?: boolean
+    email?: boolean
+    id_card?: boolean
+    bookbank?: boolean
+    loingProvider?: boolean | Customer$loingProviderArgs
+    _count?: boolean | CustomerCountOutputTypeArgs
   }
 
+
+  export type CustomerInclude = {
+    loingProvider?: boolean | Customer$loingProviderArgs
+    _count?: boolean | CustomerCountOutputTypeArgs
+  } 
 
   export type CustomerGetPayload<S extends boolean | null | undefined | CustomerArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? Customer :
     S extends undefined ? never :
     S extends { include: any } & (CustomerArgs | CustomerFindManyArgs)
-    ? Customer 
+    ? Customer  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'loingProvider' ? Array < LoingProviderGetPayload<S['include'][P]>>  :
+        P extends '_count' ? CustomerCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
     : S extends { select: any } & (CustomerArgs | CustomerFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-    P extends keyof Customer ? Customer[P] : never
+        P extends 'loingProvider' ? Array < LoingProviderGetPayload<S['select'][P]>>  :
+        P extends '_count' ? CustomerCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Customer ? Customer[P] : never
   } 
       : Customer
 
@@ -13192,6 +13277,7 @@ export namespace Prisma {
     constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
     readonly [Symbol.toStringTag]: 'PrismaClientPromise';
 
+    loingProvider<T extends Customer$loingProviderArgs= {}>(args?: Subset<T, Customer$loingProviderArgs>): PrismaPromise<Array<LoingProviderGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -13230,6 +13316,11 @@ export namespace Prisma {
     **/
     select?: CustomerSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: CustomerInclude | null
+    /**
      * Filter, which Customer to fetch.
      * 
     **/
@@ -13258,6 +13349,11 @@ export namespace Prisma {
     **/
     select?: CustomerSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: CustomerInclude | null
+    /**
      * Filter, which Customer to fetch.
      * 
     **/
@@ -13274,6 +13370,11 @@ export namespace Prisma {
      * 
     **/
     select?: CustomerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: CustomerInclude | null
     /**
      * Filter, which Customer to fetch.
      * 
@@ -13338,6 +13439,11 @@ export namespace Prisma {
     **/
     select?: CustomerSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: CustomerInclude | null
+    /**
      * Filter, which Customer to fetch.
      * 
     **/
@@ -13390,6 +13496,11 @@ export namespace Prisma {
     **/
     select?: CustomerSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: CustomerInclude | null
+    /**
      * Filter, which Customers to fetch.
      * 
     **/
@@ -13436,6 +13547,11 @@ export namespace Prisma {
     **/
     select?: CustomerSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: CustomerInclude | null
+    /**
      * The data needed to create a Customer.
      * 
     **/
@@ -13465,6 +13581,11 @@ export namespace Prisma {
      * 
     **/
     select?: CustomerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: CustomerInclude | null
     /**
      * The data needed to update a Customer.
      * 
@@ -13505,6 +13626,11 @@ export namespace Prisma {
     **/
     select?: CustomerSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: CustomerInclude | null
+    /**
      * The filter to search for the Customer to update in case it exists.
      * 
     **/
@@ -13532,6 +13658,11 @@ export namespace Prisma {
     **/
     select?: CustomerSelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: CustomerInclude | null
+    /**
      * Filter which Customer to delete.
      * 
     **/
@@ -13552,6 +13683,29 @@ export namespace Prisma {
 
 
   /**
+   * Customer.loingProvider
+   */
+  export type Customer$loingProviderArgs = {
+    /**
+     * Select specific fields to fetch from the LoingProvider
+     * 
+    **/
+    select?: LoingProviderSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: LoingProviderInclude | null
+    where?: LoingProviderWhereInput
+    orderBy?: Enumerable<LoingProviderOrderByWithRelationInput>
+    cursor?: LoingProviderWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<LoingProviderScalarFieldEnum>
+  }
+
+
+  /**
    * Customer without action
    */
   export type CustomerArgs = {
@@ -13560,6 +13714,1031 @@ export namespace Prisma {
      * 
     **/
     select?: CustomerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: CustomerInclude | null
+  }
+
+
+
+  /**
+   * Model LoingProvider
+   */
+
+
+  export type AggregateLoingProvider = {
+    _count: LoingProviderCountAggregateOutputType | null
+    _min: LoingProviderMinAggregateOutputType | null
+    _max: LoingProviderMaxAggregateOutputType | null
+  }
+
+  export type LoingProviderMinAggregateOutputType = {
+    id: string | null
+    providerSource: string | null
+    providerType: string | null
+    providerUid: string | null
+    displayName: string | null
+    providerLoginImgurl: string | null
+    createAt: Date | null
+    updateAt: Date | null
+    customerId: string | null
+  }
+
+  export type LoingProviderMaxAggregateOutputType = {
+    id: string | null
+    providerSource: string | null
+    providerType: string | null
+    providerUid: string | null
+    displayName: string | null
+    providerLoginImgurl: string | null
+    createAt: Date | null
+    updateAt: Date | null
+    customerId: string | null
+  }
+
+  export type LoingProviderCountAggregateOutputType = {
+    id: number
+    providerSource: number
+    providerType: number
+    providerUid: number
+    displayName: number
+    providerLoginImgurl: number
+    createAt: number
+    updateAt: number
+    customerId: number
+    _all: number
+  }
+
+
+  export type LoingProviderMinAggregateInputType = {
+    id?: true
+    providerSource?: true
+    providerType?: true
+    providerUid?: true
+    displayName?: true
+    providerLoginImgurl?: true
+    createAt?: true
+    updateAt?: true
+    customerId?: true
+  }
+
+  export type LoingProviderMaxAggregateInputType = {
+    id?: true
+    providerSource?: true
+    providerType?: true
+    providerUid?: true
+    displayName?: true
+    providerLoginImgurl?: true
+    createAt?: true
+    updateAt?: true
+    customerId?: true
+  }
+
+  export type LoingProviderCountAggregateInputType = {
+    id?: true
+    providerSource?: true
+    providerType?: true
+    providerUid?: true
+    displayName?: true
+    providerLoginImgurl?: true
+    createAt?: true
+    updateAt?: true
+    customerId?: true
+    _all?: true
+  }
+
+  export type LoingProviderAggregateArgs = {
+    /**
+     * Filter which LoingProvider to aggregate.
+     * 
+    **/
+    where?: LoingProviderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LoingProviders to fetch.
+     * 
+    **/
+    orderBy?: Enumerable<LoingProviderOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     * 
+    **/
+    cursor?: LoingProviderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LoingProviders from the position of the cursor.
+     * 
+    **/
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LoingProviders.
+     * 
+    **/
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LoingProviders
+    **/
+    _count?: true | LoingProviderCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LoingProviderMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LoingProviderMaxAggregateInputType
+  }
+
+  export type GetLoingProviderAggregateType<T extends LoingProviderAggregateArgs> = {
+        [P in keyof T & keyof AggregateLoingProvider]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLoingProvider[P]>
+      : GetScalarType<T[P], AggregateLoingProvider[P]>
+  }
+
+
+
+
+  export type LoingProviderGroupByArgs = {
+    where?: LoingProviderWhereInput
+    orderBy?: Enumerable<LoingProviderOrderByWithAggregationInput>
+    by: Array<LoingProviderScalarFieldEnum>
+    having?: LoingProviderScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LoingProviderCountAggregateInputType | true
+    _min?: LoingProviderMinAggregateInputType
+    _max?: LoingProviderMaxAggregateInputType
+  }
+
+
+  export type LoingProviderGroupByOutputType = {
+    id: string
+    providerSource: string
+    providerType: string
+    providerUid: string
+    displayName: string
+    providerLoginImgurl: string
+    createAt: Date
+    updateAt: Date
+    customerId: string
+    _count: LoingProviderCountAggregateOutputType | null
+    _min: LoingProviderMinAggregateOutputType | null
+    _max: LoingProviderMaxAggregateOutputType | null
+  }
+
+  type GetLoingProviderGroupByPayload<T extends LoingProviderGroupByArgs> = PrismaPromise<
+    Array<
+      PickArray<LoingProviderGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LoingProviderGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LoingProviderGroupByOutputType[P]>
+            : GetScalarType<T[P], LoingProviderGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LoingProviderSelect = {
+    id?: boolean
+    providerSource?: boolean
+    providerType?: boolean
+    providerUid?: boolean
+    displayName?: boolean
+    providerLoginImgurl?: boolean
+    createAt?: boolean
+    updateAt?: boolean
+    custmer?: boolean | CustomerArgs
+    customerId?: boolean
+  }
+
+
+  export type LoingProviderInclude = {
+    custmer?: boolean | CustomerArgs
+  } 
+
+  export type LoingProviderGetPayload<S extends boolean | null | undefined | LoingProviderArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? LoingProvider :
+    S extends undefined ? never :
+    S extends { include: any } & (LoingProviderArgs | LoingProviderFindManyArgs)
+    ? LoingProvider  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'custmer' ? CustomerGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (LoingProviderArgs | LoingProviderFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'custmer' ? CustomerGetPayload<S['select'][P]> :  P extends keyof LoingProvider ? LoingProvider[P] : never
+  } 
+      : LoingProvider
+
+
+  type LoingProviderCountArgs = Merge<
+    Omit<LoingProviderFindManyArgs, 'select' | 'include'> & {
+      select?: LoingProviderCountAggregateInputType | true
+    }
+  >
+
+  export interface LoingProviderDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+    /**
+     * Find zero or one LoingProvider that matches the filter.
+     * @param {LoingProviderFindUniqueArgs} args - Arguments to find a LoingProvider
+     * @example
+     * // Get one LoingProvider
+     * const loingProvider = await prisma.loingProvider.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends LoingProviderFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, LoingProviderFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'LoingProvider'> extends True ? Prisma__LoingProviderClient<LoingProviderGetPayload<T>> : Prisma__LoingProviderClient<LoingProviderGetPayload<T> | null, null>
+
+    /**
+     * Find one LoingProvider that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {LoingProviderFindUniqueOrThrowArgs} args - Arguments to find a LoingProvider
+     * @example
+     * // Get one LoingProvider
+     * const loingProvider = await prisma.loingProvider.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends LoingProviderFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, LoingProviderFindUniqueOrThrowArgs>
+    ): Prisma__LoingProviderClient<LoingProviderGetPayload<T>>
+
+    /**
+     * Find the first LoingProvider that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LoingProviderFindFirstArgs} args - Arguments to find a LoingProvider
+     * @example
+     * // Get one LoingProvider
+     * const loingProvider = await prisma.loingProvider.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends LoingProviderFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, LoingProviderFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'LoingProvider'> extends True ? Prisma__LoingProviderClient<LoingProviderGetPayload<T>> : Prisma__LoingProviderClient<LoingProviderGetPayload<T> | null, null>
+
+    /**
+     * Find the first LoingProvider that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LoingProviderFindFirstOrThrowArgs} args - Arguments to find a LoingProvider
+     * @example
+     * // Get one LoingProvider
+     * const loingProvider = await prisma.loingProvider.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends LoingProviderFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, LoingProviderFindFirstOrThrowArgs>
+    ): Prisma__LoingProviderClient<LoingProviderGetPayload<T>>
+
+    /**
+     * Find zero or more LoingProviders that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LoingProviderFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LoingProviders
+     * const loingProviders = await prisma.loingProvider.findMany()
+     * 
+     * // Get first 10 LoingProviders
+     * const loingProviders = await prisma.loingProvider.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const loingProviderWithIdOnly = await prisma.loingProvider.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends LoingProviderFindManyArgs>(
+      args?: SelectSubset<T, LoingProviderFindManyArgs>
+    ): PrismaPromise<Array<LoingProviderGetPayload<T>>>
+
+    /**
+     * Create a LoingProvider.
+     * @param {LoingProviderCreateArgs} args - Arguments to create a LoingProvider.
+     * @example
+     * // Create one LoingProvider
+     * const LoingProvider = await prisma.loingProvider.create({
+     *   data: {
+     *     // ... data to create a LoingProvider
+     *   }
+     * })
+     * 
+    **/
+    create<T extends LoingProviderCreateArgs>(
+      args: SelectSubset<T, LoingProviderCreateArgs>
+    ): Prisma__LoingProviderClient<LoingProviderGetPayload<T>>
+
+    /**
+     * Create many LoingProviders.
+     *     @param {LoingProviderCreateManyArgs} args - Arguments to create many LoingProviders.
+     *     @example
+     *     // Create many LoingProviders
+     *     const loingProvider = await prisma.loingProvider.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends LoingProviderCreateManyArgs>(
+      args?: SelectSubset<T, LoingProviderCreateManyArgs>
+    ): PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a LoingProvider.
+     * @param {LoingProviderDeleteArgs} args - Arguments to delete one LoingProvider.
+     * @example
+     * // Delete one LoingProvider
+     * const LoingProvider = await prisma.loingProvider.delete({
+     *   where: {
+     *     // ... filter to delete one LoingProvider
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends LoingProviderDeleteArgs>(
+      args: SelectSubset<T, LoingProviderDeleteArgs>
+    ): Prisma__LoingProviderClient<LoingProviderGetPayload<T>>
+
+    /**
+     * Update one LoingProvider.
+     * @param {LoingProviderUpdateArgs} args - Arguments to update one LoingProvider.
+     * @example
+     * // Update one LoingProvider
+     * const loingProvider = await prisma.loingProvider.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends LoingProviderUpdateArgs>(
+      args: SelectSubset<T, LoingProviderUpdateArgs>
+    ): Prisma__LoingProviderClient<LoingProviderGetPayload<T>>
+
+    /**
+     * Delete zero or more LoingProviders.
+     * @param {LoingProviderDeleteManyArgs} args - Arguments to filter LoingProviders to delete.
+     * @example
+     * // Delete a few LoingProviders
+     * const { count } = await prisma.loingProvider.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends LoingProviderDeleteManyArgs>(
+      args?: SelectSubset<T, LoingProviderDeleteManyArgs>
+    ): PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LoingProviders.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LoingProviderUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LoingProviders
+     * const loingProvider = await prisma.loingProvider.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends LoingProviderUpdateManyArgs>(
+      args: SelectSubset<T, LoingProviderUpdateManyArgs>
+    ): PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one LoingProvider.
+     * @param {LoingProviderUpsertArgs} args - Arguments to update or create a LoingProvider.
+     * @example
+     * // Update or create a LoingProvider
+     * const loingProvider = await prisma.loingProvider.upsert({
+     *   create: {
+     *     // ... data to create a LoingProvider
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LoingProvider we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends LoingProviderUpsertArgs>(
+      args: SelectSubset<T, LoingProviderUpsertArgs>
+    ): Prisma__LoingProviderClient<LoingProviderGetPayload<T>>
+
+    /**
+     * Count the number of LoingProviders.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LoingProviderCountArgs} args - Arguments to filter LoingProviders to count.
+     * @example
+     * // Count the number of LoingProviders
+     * const count = await prisma.loingProvider.count({
+     *   where: {
+     *     // ... the filter for the LoingProviders we want to count
+     *   }
+     * })
+    **/
+    count<T extends LoingProviderCountArgs>(
+      args?: Subset<T, LoingProviderCountArgs>,
+    ): PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LoingProviderCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LoingProvider.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LoingProviderAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LoingProviderAggregateArgs>(args: Subset<T, LoingProviderAggregateArgs>): PrismaPromise<GetLoingProviderAggregateType<T>>
+
+    /**
+     * Group by LoingProvider.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LoingProviderGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LoingProviderGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LoingProviderGroupByArgs['orderBy'] }
+        : { orderBy?: LoingProviderGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LoingProviderGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLoingProviderGroupByPayload<T> : PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LoingProvider.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__LoingProviderClient<T, Null = never> implements PrismaPromise<T> {
+    [prisma]: true;
+    private readonly _dmmf;
+    private readonly _fetcher;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    constructor(_dmmf: runtime.DMMFClass, _fetcher: PrismaClientFetcher, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+    readonly [Symbol.toStringTag]: 'PrismaClientPromise';
+
+    custmer<T extends CustomerArgs= {}>(args?: Subset<T, CustomerArgs>): Prisma__CustomerClient<CustomerGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * LoingProvider base type for findUnique actions
+   */
+  export type LoingProviderFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the LoingProvider
+     * 
+    **/
+    select?: LoingProviderSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: LoingProviderInclude | null
+    /**
+     * Filter, which LoingProvider to fetch.
+     * 
+    **/
+    where: LoingProviderWhereUniqueInput
+  }
+
+  /**
+   * LoingProvider findUnique
+   */
+  export interface LoingProviderFindUniqueArgs extends LoingProviderFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * LoingProvider findUniqueOrThrow
+   */
+  export type LoingProviderFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the LoingProvider
+     * 
+    **/
+    select?: LoingProviderSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: LoingProviderInclude | null
+    /**
+     * Filter, which LoingProvider to fetch.
+     * 
+    **/
+    where: LoingProviderWhereUniqueInput
+  }
+
+
+  /**
+   * LoingProvider base type for findFirst actions
+   */
+  export type LoingProviderFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the LoingProvider
+     * 
+    **/
+    select?: LoingProviderSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: LoingProviderInclude | null
+    /**
+     * Filter, which LoingProvider to fetch.
+     * 
+    **/
+    where?: LoingProviderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LoingProviders to fetch.
+     * 
+    **/
+    orderBy?: Enumerable<LoingProviderOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LoingProviders.
+     * 
+    **/
+    cursor?: LoingProviderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LoingProviders from the position of the cursor.
+     * 
+    **/
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LoingProviders.
+     * 
+    **/
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LoingProviders.
+     * 
+    **/
+    distinct?: Enumerable<LoingProviderScalarFieldEnum>
+  }
+
+  /**
+   * LoingProvider findFirst
+   */
+  export interface LoingProviderFindFirstArgs extends LoingProviderFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * LoingProvider findFirstOrThrow
+   */
+  export type LoingProviderFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the LoingProvider
+     * 
+    **/
+    select?: LoingProviderSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: LoingProviderInclude | null
+    /**
+     * Filter, which LoingProvider to fetch.
+     * 
+    **/
+    where?: LoingProviderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LoingProviders to fetch.
+     * 
+    **/
+    orderBy?: Enumerable<LoingProviderOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LoingProviders.
+     * 
+    **/
+    cursor?: LoingProviderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LoingProviders from the position of the cursor.
+     * 
+    **/
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LoingProviders.
+     * 
+    **/
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LoingProviders.
+     * 
+    **/
+    distinct?: Enumerable<LoingProviderScalarFieldEnum>
+  }
+
+
+  /**
+   * LoingProvider findMany
+   */
+  export type LoingProviderFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the LoingProvider
+     * 
+    **/
+    select?: LoingProviderSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: LoingProviderInclude | null
+    /**
+     * Filter, which LoingProviders to fetch.
+     * 
+    **/
+    where?: LoingProviderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LoingProviders to fetch.
+     * 
+    **/
+    orderBy?: Enumerable<LoingProviderOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LoingProviders.
+     * 
+    **/
+    cursor?: LoingProviderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LoingProviders from the position of the cursor.
+     * 
+    **/
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LoingProviders.
+     * 
+    **/
+    skip?: number
+    distinct?: Enumerable<LoingProviderScalarFieldEnum>
+  }
+
+
+  /**
+   * LoingProvider create
+   */
+  export type LoingProviderCreateArgs = {
+    /**
+     * Select specific fields to fetch from the LoingProvider
+     * 
+    **/
+    select?: LoingProviderSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: LoingProviderInclude | null
+    /**
+     * The data needed to create a LoingProvider.
+     * 
+    **/
+    data: XOR<LoingProviderCreateInput, LoingProviderUncheckedCreateInput>
+  }
+
+
+  /**
+   * LoingProvider createMany
+   */
+  export type LoingProviderCreateManyArgs = {
+    /**
+     * The data used to create many LoingProviders.
+     * 
+    **/
+    data: Enumerable<LoingProviderCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * LoingProvider update
+   */
+  export type LoingProviderUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the LoingProvider
+     * 
+    **/
+    select?: LoingProviderSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: LoingProviderInclude | null
+    /**
+     * The data needed to update a LoingProvider.
+     * 
+    **/
+    data: XOR<LoingProviderUpdateInput, LoingProviderUncheckedUpdateInput>
+    /**
+     * Choose, which LoingProvider to update.
+     * 
+    **/
+    where: LoingProviderWhereUniqueInput
+  }
+
+
+  /**
+   * LoingProvider updateMany
+   */
+  export type LoingProviderUpdateManyArgs = {
+    /**
+     * The data used to update LoingProviders.
+     * 
+    **/
+    data: XOR<LoingProviderUpdateManyMutationInput, LoingProviderUncheckedUpdateManyInput>
+    /**
+     * Filter which LoingProviders to update
+     * 
+    **/
+    where?: LoingProviderWhereInput
+  }
+
+
+  /**
+   * LoingProvider upsert
+   */
+  export type LoingProviderUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the LoingProvider
+     * 
+    **/
+    select?: LoingProviderSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: LoingProviderInclude | null
+    /**
+     * The filter to search for the LoingProvider to update in case it exists.
+     * 
+    **/
+    where: LoingProviderWhereUniqueInput
+    /**
+     * In case the LoingProvider found by the `where` argument doesn't exist, create a new LoingProvider with this data.
+     * 
+    **/
+    create: XOR<LoingProviderCreateInput, LoingProviderUncheckedCreateInput>
+    /**
+     * In case the LoingProvider was found with the provided `where` argument, update it with this data.
+     * 
+    **/
+    update: XOR<LoingProviderUpdateInput, LoingProviderUncheckedUpdateInput>
+  }
+
+
+  /**
+   * LoingProvider delete
+   */
+  export type LoingProviderDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the LoingProvider
+     * 
+    **/
+    select?: LoingProviderSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: LoingProviderInclude | null
+    /**
+     * Filter which LoingProvider to delete.
+     * 
+    **/
+    where: LoingProviderWhereUniqueInput
+  }
+
+
+  /**
+   * LoingProvider deleteMany
+   */
+  export type LoingProviderDeleteManyArgs = {
+    /**
+     * Filter which LoingProviders to delete
+     * 
+    **/
+    where?: LoingProviderWhereInput
+  }
+
+
+  /**
+   * LoingProvider without action
+   */
+  export type LoingProviderArgs = {
+    /**
+     * Select specific fields to fetch from the LoingProvider
+     * 
+    **/
+    select?: LoingProviderSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     * 
+    **/
+    include?: LoingProviderInclude | null
   }
 
 
@@ -14583,11 +15762,30 @@ export namespace Prisma {
     id: 'id',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    firstname: 'firstname',
-    fullname: 'fullname'
+    name: 'name',
+    surname: 'surname',
+    tel: 'tel',
+    email: 'email',
+    id_card: 'id_card',
+    bookbank: 'bookbank'
   };
 
   export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
+
+
+  export const LoingProviderScalarFieldEnum: {
+    id: 'id',
+    providerSource: 'providerSource',
+    providerType: 'providerType',
+    providerUid: 'providerUid',
+    displayName: 'displayName',
+    providerLoginImgurl: 'providerLoginImgurl',
+    createAt: 'createAt',
+    updateAt: 'updateAt',
+    customerId: 'customerId'
+  };
+
+  export type LoingProviderScalarFieldEnum = (typeof LoingProviderScalarFieldEnum)[keyof typeof LoingProviderScalarFieldEnum]
 
 
   export const PostScalarFieldEnum: {
@@ -15195,47 +16393,126 @@ export namespace Prisma {
     AND?: Enumerable<CustomerWhereInput>
     OR?: Enumerable<CustomerWhereInput>
     NOT?: Enumerable<CustomerWhereInput>
-    id?: IntFilter | number
+    id?: StringFilter | string
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
-    firstname?: StringFilter | string
-    fullname?: StringFilter | string
+    name?: StringFilter | string
+    surname?: StringFilter | string
+    tel?: StringFilter | string
+    email?: StringFilter | string
+    id_card?: StringFilter | string
+    bookbank?: StringFilter | string
+    loingProvider?: LoingProviderListRelationFilter
   }
 
   export type CustomerOrderByWithRelationInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    firstname?: SortOrder
-    fullname?: SortOrder
+    name?: SortOrder
+    surname?: SortOrder
+    tel?: SortOrder
+    email?: SortOrder
+    id_card?: SortOrder
+    bookbank?: SortOrder
+    loingProvider?: LoingProviderOrderByRelationAggregateInput
   }
 
   export type CustomerWhereUniqueInput = {
-    id?: number
+    id?: string
   }
 
   export type CustomerOrderByWithAggregationInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    firstname?: SortOrder
-    fullname?: SortOrder
+    name?: SortOrder
+    surname?: SortOrder
+    tel?: SortOrder
+    email?: SortOrder
+    id_card?: SortOrder
+    bookbank?: SortOrder
     _count?: CustomerCountOrderByAggregateInput
-    _avg?: CustomerAvgOrderByAggregateInput
     _max?: CustomerMaxOrderByAggregateInput
     _min?: CustomerMinOrderByAggregateInput
-    _sum?: CustomerSumOrderByAggregateInput
   }
 
   export type CustomerScalarWhereWithAggregatesInput = {
     AND?: Enumerable<CustomerScalarWhereWithAggregatesInput>
     OR?: Enumerable<CustomerScalarWhereWithAggregatesInput>
     NOT?: Enumerable<CustomerScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
+    id?: StringWithAggregatesFilter | string
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
-    firstname?: StringWithAggregatesFilter | string
-    fullname?: StringWithAggregatesFilter | string
+    name?: StringWithAggregatesFilter | string
+    surname?: StringWithAggregatesFilter | string
+    tel?: StringWithAggregatesFilter | string
+    email?: StringWithAggregatesFilter | string
+    id_card?: StringWithAggregatesFilter | string
+    bookbank?: StringWithAggregatesFilter | string
+  }
+
+  export type LoingProviderWhereInput = {
+    AND?: Enumerable<LoingProviderWhereInput>
+    OR?: Enumerable<LoingProviderWhereInput>
+    NOT?: Enumerable<LoingProviderWhereInput>
+    id?: StringFilter | string
+    providerSource?: StringFilter | string
+    providerType?: StringFilter | string
+    providerUid?: StringFilter | string
+    displayName?: StringFilter | string
+    providerLoginImgurl?: StringFilter | string
+    createAt?: DateTimeFilter | Date | string
+    updateAt?: DateTimeFilter | Date | string
+    custmer?: XOR<CustomerRelationFilter, CustomerWhereInput>
+    customerId?: StringFilter | string
+  }
+
+  export type LoingProviderOrderByWithRelationInput = {
+    id?: SortOrder
+    providerSource?: SortOrder
+    providerType?: SortOrder
+    providerUid?: SortOrder
+    displayName?: SortOrder
+    providerLoginImgurl?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+    custmer?: CustomerOrderByWithRelationInput
+    customerId?: SortOrder
+  }
+
+  export type LoingProviderWhereUniqueInput = {
+    id?: string
+  }
+
+  export type LoingProviderOrderByWithAggregationInput = {
+    id?: SortOrder
+    providerSource?: SortOrder
+    providerType?: SortOrder
+    providerUid?: SortOrder
+    displayName?: SortOrder
+    providerLoginImgurl?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+    customerId?: SortOrder
+    _count?: LoingProviderCountOrderByAggregateInput
+    _max?: LoingProviderMaxOrderByAggregateInput
+    _min?: LoingProviderMinOrderByAggregateInput
+  }
+
+  export type LoingProviderScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<LoingProviderScalarWhereWithAggregatesInput>
+    OR?: Enumerable<LoingProviderScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<LoingProviderScalarWhereWithAggregatesInput>
+    id?: StringWithAggregatesFilter | string
+    providerSource?: StringWithAggregatesFilter | string
+    providerType?: StringWithAggregatesFilter | string
+    providerUid?: StringWithAggregatesFilter | string
+    displayName?: StringWithAggregatesFilter | string
+    providerLoginImgurl?: StringWithAggregatesFilter | string
+    createAt?: DateTimeWithAggregatesFilter | Date | string
+    updateAt?: DateTimeWithAggregatesFilter | Date | string
+    customerId?: StringWithAggregatesFilter | string
   }
 
   export type ProductWhereInput = {
@@ -15825,56 +17102,174 @@ export namespace Prisma {
   }
 
   export type CustomerCreateInput = {
+    id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    firstname: string
-    fullname: string
+    name: string
+    surname: string
+    tel: string
+    email: string
+    id_card: string
+    bookbank: string
+    loingProvider?: LoingProviderCreateNestedManyWithoutCustmerInput
   }
 
   export type CustomerUncheckedCreateInput = {
-    id?: number
+    id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    firstname: string
-    fullname: string
+    name: string
+    surname: string
+    tel: string
+    email: string
+    id_card: string
+    bookbank: string
+    loingProvider?: LoingProviderUncheckedCreateNestedManyWithoutCustmerInput
   }
 
   export type CustomerUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    firstname?: StringFieldUpdateOperationsInput | string
-    fullname?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    surname?: StringFieldUpdateOperationsInput | string
+    tel?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    id_card?: StringFieldUpdateOperationsInput | string
+    bookbank?: StringFieldUpdateOperationsInput | string
+    loingProvider?: LoingProviderUpdateManyWithoutCustmerNestedInput
   }
 
   export type CustomerUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    firstname?: StringFieldUpdateOperationsInput | string
-    fullname?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    surname?: StringFieldUpdateOperationsInput | string
+    tel?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    id_card?: StringFieldUpdateOperationsInput | string
+    bookbank?: StringFieldUpdateOperationsInput | string
+    loingProvider?: LoingProviderUncheckedUpdateManyWithoutCustmerNestedInput
   }
 
   export type CustomerCreateManyInput = {
-    id?: number
+    id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    firstname: string
-    fullname: string
+    name: string
+    surname: string
+    tel: string
+    email: string
+    id_card: string
+    bookbank: string
   }
 
   export type CustomerUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    firstname?: StringFieldUpdateOperationsInput | string
-    fullname?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    surname?: StringFieldUpdateOperationsInput | string
+    tel?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    id_card?: StringFieldUpdateOperationsInput | string
+    bookbank?: StringFieldUpdateOperationsInput | string
   }
 
   export type CustomerUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    firstname?: StringFieldUpdateOperationsInput | string
-    fullname?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    surname?: StringFieldUpdateOperationsInput | string
+    tel?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    id_card?: StringFieldUpdateOperationsInput | string
+    bookbank?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type LoingProviderCreateInput = {
+    id?: string
+    providerSource: string
+    providerType: string
+    providerUid: string
+    displayName: string
+    providerLoginImgurl: string
+    createAt?: Date | string
+    updateAt?: Date | string
+    custmer: CustomerCreateNestedOneWithoutLoingProviderInput
+  }
+
+  export type LoingProviderUncheckedCreateInput = {
+    id?: string
+    providerSource: string
+    providerType: string
+    providerUid: string
+    displayName: string
+    providerLoginImgurl: string
+    createAt?: Date | string
+    updateAt?: Date | string
+    customerId: string
+  }
+
+  export type LoingProviderUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    providerSource?: StringFieldUpdateOperationsInput | string
+    providerType?: StringFieldUpdateOperationsInput | string
+    providerUid?: StringFieldUpdateOperationsInput | string
+    displayName?: StringFieldUpdateOperationsInput | string
+    providerLoginImgurl?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    custmer?: CustomerUpdateOneRequiredWithoutLoingProviderNestedInput
+  }
+
+  export type LoingProviderUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    providerSource?: StringFieldUpdateOperationsInput | string
+    providerType?: StringFieldUpdateOperationsInput | string
+    providerUid?: StringFieldUpdateOperationsInput | string
+    displayName?: StringFieldUpdateOperationsInput | string
+    providerLoginImgurl?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customerId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type LoingProviderCreateManyInput = {
+    id?: string
+    providerSource: string
+    providerType: string
+    providerUid: string
+    displayName: string
+    providerLoginImgurl: string
+    createAt?: Date | string
+    updateAt?: Date | string
+    customerId: string
+  }
+
+  export type LoingProviderUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    providerSource?: StringFieldUpdateOperationsInput | string
+    providerType?: StringFieldUpdateOperationsInput | string
+    providerUid?: StringFieldUpdateOperationsInput | string
+    displayName?: StringFieldUpdateOperationsInput | string
+    providerLoginImgurl?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LoingProviderUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    providerSource?: StringFieldUpdateOperationsInput | string
+    providerType?: StringFieldUpdateOperationsInput | string
+    providerUid?: StringFieldUpdateOperationsInput | string
+    displayName?: StringFieldUpdateOperationsInput | string
+    providerLoginImgurl?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customerId?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProductCreateInput = {
@@ -16476,36 +17871,91 @@ export namespace Prisma {
     authorId?: SortOrder
   }
 
+  export type LoingProviderListRelationFilter = {
+    every?: LoingProviderWhereInput
+    some?: LoingProviderWhereInput
+    none?: LoingProviderWhereInput
+  }
+
+  export type LoingProviderOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type CustomerCountOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    firstname?: SortOrder
-    fullname?: SortOrder
-  }
-
-  export type CustomerAvgOrderByAggregateInput = {
-    id?: SortOrder
+    name?: SortOrder
+    surname?: SortOrder
+    tel?: SortOrder
+    email?: SortOrder
+    id_card?: SortOrder
+    bookbank?: SortOrder
   }
 
   export type CustomerMaxOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    firstname?: SortOrder
-    fullname?: SortOrder
+    name?: SortOrder
+    surname?: SortOrder
+    tel?: SortOrder
+    email?: SortOrder
+    id_card?: SortOrder
+    bookbank?: SortOrder
   }
 
   export type CustomerMinOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    firstname?: SortOrder
-    fullname?: SortOrder
+    name?: SortOrder
+    surname?: SortOrder
+    tel?: SortOrder
+    email?: SortOrder
+    id_card?: SortOrder
+    bookbank?: SortOrder
   }
 
-  export type CustomerSumOrderByAggregateInput = {
+  export type CustomerRelationFilter = {
+    is?: CustomerWhereInput
+    isNot?: CustomerWhereInput
+  }
+
+  export type LoingProviderCountOrderByAggregateInput = {
     id?: SortOrder
+    providerSource?: SortOrder
+    providerType?: SortOrder
+    providerUid?: SortOrder
+    displayName?: SortOrder
+    providerLoginImgurl?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+    customerId?: SortOrder
+  }
+
+  export type LoingProviderMaxOrderByAggregateInput = {
+    id?: SortOrder
+    providerSource?: SortOrder
+    providerType?: SortOrder
+    providerUid?: SortOrder
+    displayName?: SortOrder
+    providerLoginImgurl?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+    customerId?: SortOrder
+  }
+
+  export type LoingProviderMinOrderByAggregateInput = {
+    id?: SortOrder
+    providerSource?: SortOrder
+    providerType?: SortOrder
+    providerUid?: SortOrder
+    displayName?: SortOrder
+    providerLoginImgurl?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+    customerId?: SortOrder
   }
 
   export type ProductCountOrderByAggregateInput = {
@@ -16972,6 +18422,62 @@ export namespace Prisma {
     upsert?: AuthorUpsertWithoutBooksOnAuthorsInput
     connect?: AuthorWhereUniqueInput
     update?: XOR<AuthorUpdateWithoutBooksOnAuthorsInput, AuthorUncheckedUpdateWithoutBooksOnAuthorsInput>
+  }
+
+  export type LoingProviderCreateNestedManyWithoutCustmerInput = {
+    create?: XOR<Enumerable<LoingProviderCreateWithoutCustmerInput>, Enumerable<LoingProviderUncheckedCreateWithoutCustmerInput>>
+    connectOrCreate?: Enumerable<LoingProviderCreateOrConnectWithoutCustmerInput>
+    createMany?: LoingProviderCreateManyCustmerInputEnvelope
+    connect?: Enumerable<LoingProviderWhereUniqueInput>
+  }
+
+  export type LoingProviderUncheckedCreateNestedManyWithoutCustmerInput = {
+    create?: XOR<Enumerable<LoingProviderCreateWithoutCustmerInput>, Enumerable<LoingProviderUncheckedCreateWithoutCustmerInput>>
+    connectOrCreate?: Enumerable<LoingProviderCreateOrConnectWithoutCustmerInput>
+    createMany?: LoingProviderCreateManyCustmerInputEnvelope
+    connect?: Enumerable<LoingProviderWhereUniqueInput>
+  }
+
+  export type LoingProviderUpdateManyWithoutCustmerNestedInput = {
+    create?: XOR<Enumerable<LoingProviderCreateWithoutCustmerInput>, Enumerable<LoingProviderUncheckedCreateWithoutCustmerInput>>
+    connectOrCreate?: Enumerable<LoingProviderCreateOrConnectWithoutCustmerInput>
+    upsert?: Enumerable<LoingProviderUpsertWithWhereUniqueWithoutCustmerInput>
+    createMany?: LoingProviderCreateManyCustmerInputEnvelope
+    set?: Enumerable<LoingProviderWhereUniqueInput>
+    disconnect?: Enumerable<LoingProviderWhereUniqueInput>
+    delete?: Enumerable<LoingProviderWhereUniqueInput>
+    connect?: Enumerable<LoingProviderWhereUniqueInput>
+    update?: Enumerable<LoingProviderUpdateWithWhereUniqueWithoutCustmerInput>
+    updateMany?: Enumerable<LoingProviderUpdateManyWithWhereWithoutCustmerInput>
+    deleteMany?: Enumerable<LoingProviderScalarWhereInput>
+  }
+
+  export type LoingProviderUncheckedUpdateManyWithoutCustmerNestedInput = {
+    create?: XOR<Enumerable<LoingProviderCreateWithoutCustmerInput>, Enumerable<LoingProviderUncheckedCreateWithoutCustmerInput>>
+    connectOrCreate?: Enumerable<LoingProviderCreateOrConnectWithoutCustmerInput>
+    upsert?: Enumerable<LoingProviderUpsertWithWhereUniqueWithoutCustmerInput>
+    createMany?: LoingProviderCreateManyCustmerInputEnvelope
+    set?: Enumerable<LoingProviderWhereUniqueInput>
+    disconnect?: Enumerable<LoingProviderWhereUniqueInput>
+    delete?: Enumerable<LoingProviderWhereUniqueInput>
+    connect?: Enumerable<LoingProviderWhereUniqueInput>
+    update?: Enumerable<LoingProviderUpdateWithWhereUniqueWithoutCustmerInput>
+    updateMany?: Enumerable<LoingProviderUpdateManyWithWhereWithoutCustmerInput>
+    deleteMany?: Enumerable<LoingProviderScalarWhereInput>
+  }
+
+  export type CustomerCreateNestedOneWithoutLoingProviderInput = {
+    create?: XOR<CustomerCreateWithoutLoingProviderInput, CustomerUncheckedCreateWithoutLoingProviderInput>
+    connectOrCreate?: CustomerCreateOrConnectWithoutLoingProviderInput
+    connect?: CustomerWhereUniqueInput
+  }
+
+  export type CustomerUpdateOneRequiredWithoutLoingProviderNestedInput = {
+    create?: XOR<CustomerCreateWithoutLoingProviderInput, CustomerUncheckedCreateWithoutLoingProviderInput>
+    connectOrCreate?: CustomerCreateOrConnectWithoutLoingProviderInput
+    upsert?: CustomerUpsertWithoutLoingProviderInput
+    connect?: CustomerWhereUniqueInput
+    update?: XOR<CustomerUpdateWithoutLoingProviderInput, CustomerUncheckedUpdateWithoutLoingProviderInput>
   }
 
   export type NestedStringFilter = {
@@ -17735,6 +19241,127 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
   }
 
+  export type LoingProviderCreateWithoutCustmerInput = {
+    id?: string
+    providerSource: string
+    providerType: string
+    providerUid: string
+    displayName: string
+    providerLoginImgurl: string
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type LoingProviderUncheckedCreateWithoutCustmerInput = {
+    id?: string
+    providerSource: string
+    providerType: string
+    providerUid: string
+    displayName: string
+    providerLoginImgurl: string
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type LoingProviderCreateOrConnectWithoutCustmerInput = {
+    where: LoingProviderWhereUniqueInput
+    create: XOR<LoingProviderCreateWithoutCustmerInput, LoingProviderUncheckedCreateWithoutCustmerInput>
+  }
+
+  export type LoingProviderCreateManyCustmerInputEnvelope = {
+    data: Enumerable<LoingProviderCreateManyCustmerInput>
+    skipDuplicates?: boolean
+  }
+
+  export type LoingProviderUpsertWithWhereUniqueWithoutCustmerInput = {
+    where: LoingProviderWhereUniqueInput
+    update: XOR<LoingProviderUpdateWithoutCustmerInput, LoingProviderUncheckedUpdateWithoutCustmerInput>
+    create: XOR<LoingProviderCreateWithoutCustmerInput, LoingProviderUncheckedCreateWithoutCustmerInput>
+  }
+
+  export type LoingProviderUpdateWithWhereUniqueWithoutCustmerInput = {
+    where: LoingProviderWhereUniqueInput
+    data: XOR<LoingProviderUpdateWithoutCustmerInput, LoingProviderUncheckedUpdateWithoutCustmerInput>
+  }
+
+  export type LoingProviderUpdateManyWithWhereWithoutCustmerInput = {
+    where: LoingProviderScalarWhereInput
+    data: XOR<LoingProviderUpdateManyMutationInput, LoingProviderUncheckedUpdateManyWithoutLoingProviderInput>
+  }
+
+  export type LoingProviderScalarWhereInput = {
+    AND?: Enumerable<LoingProviderScalarWhereInput>
+    OR?: Enumerable<LoingProviderScalarWhereInput>
+    NOT?: Enumerable<LoingProviderScalarWhereInput>
+    id?: StringFilter | string
+    providerSource?: StringFilter | string
+    providerType?: StringFilter | string
+    providerUid?: StringFilter | string
+    displayName?: StringFilter | string
+    providerLoginImgurl?: StringFilter | string
+    createAt?: DateTimeFilter | Date | string
+    updateAt?: DateTimeFilter | Date | string
+    customerId?: StringFilter | string
+  }
+
+  export type CustomerCreateWithoutLoingProviderInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name: string
+    surname: string
+    tel: string
+    email: string
+    id_card: string
+    bookbank: string
+  }
+
+  export type CustomerUncheckedCreateWithoutLoingProviderInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name: string
+    surname: string
+    tel: string
+    email: string
+    id_card: string
+    bookbank: string
+  }
+
+  export type CustomerCreateOrConnectWithoutLoingProviderInput = {
+    where: CustomerWhereUniqueInput
+    create: XOR<CustomerCreateWithoutLoingProviderInput, CustomerUncheckedCreateWithoutLoingProviderInput>
+  }
+
+  export type CustomerUpsertWithoutLoingProviderInput = {
+    update: XOR<CustomerUpdateWithoutLoingProviderInput, CustomerUncheckedUpdateWithoutLoingProviderInput>
+    create: XOR<CustomerCreateWithoutLoingProviderInput, CustomerUncheckedCreateWithoutLoingProviderInput>
+  }
+
+  export type CustomerUpdateWithoutLoingProviderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    surname?: StringFieldUpdateOperationsInput | string
+    tel?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    id_card?: StringFieldUpdateOperationsInput | string
+    bookbank?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CustomerUncheckedUpdateWithoutLoingProviderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    surname?: StringFieldUpdateOperationsInput | string
+    tel?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    id_card?: StringFieldUpdateOperationsInput | string
+    bookbank?: StringFieldUpdateOperationsInput | string
+  }
+
   export type StudentWishListCreateManyProfileInput = {
     id?: string
     courseLookupId: string
@@ -17862,6 +19489,50 @@ export namespace Prisma {
 
   export type BooksOnAuthorsUncheckedUpdateWithoutAuthorInput = {
     bookId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type LoingProviderCreateManyCustmerInput = {
+    id?: string
+    providerSource: string
+    providerType: string
+    providerUid: string
+    displayName: string
+    providerLoginImgurl: string
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type LoingProviderUpdateWithoutCustmerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    providerSource?: StringFieldUpdateOperationsInput | string
+    providerType?: StringFieldUpdateOperationsInput | string
+    providerUid?: StringFieldUpdateOperationsInput | string
+    displayName?: StringFieldUpdateOperationsInput | string
+    providerLoginImgurl?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LoingProviderUncheckedUpdateWithoutCustmerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    providerSource?: StringFieldUpdateOperationsInput | string
+    providerType?: StringFieldUpdateOperationsInput | string
+    providerUid?: StringFieldUpdateOperationsInput | string
+    displayName?: StringFieldUpdateOperationsInput | string
+    providerLoginImgurl?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LoingProviderUncheckedUpdateManyWithoutLoingProviderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    providerSource?: StringFieldUpdateOperationsInput | string
+    providerType?: StringFieldUpdateOperationsInput | string
+    providerUid?: StringFieldUpdateOperationsInput | string
+    displayName?: StringFieldUpdateOperationsInput | string
+    providerLoginImgurl?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

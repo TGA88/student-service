@@ -138,12 +138,46 @@ model BooksOnAuthors {
 //#####################################################################
 
 model Customer {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  firstname String   @db.VarChar(255)
-  fullname  String   @db.VarChar(255)
+  id            String          @id @default(uuid())
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  name          String          @db.VarChar(255)
+  surname       String          @db.VarChar(255)
+  tel           String          @db.VarChar(255)
+  email         String          @db.VarChar(255)
+  id_card       String          @db.VarChar(255)
+  bookbank      String          @db.VarChar(255)
+  loingProvider LoingProvider[]
 }
+
+model LoingProvider {
+  id                  String   @id @default(uuid())
+  providerSource      String   @db.VarChar(255)
+  providerType        String   @db.VarChar(255)
+  providerUid         String   @db.VarChar(255)
+  displayName         String   @db.VarChar(255)
+  providerLoginImgurl String   @db.VarChar(255)
+  createAt            DateTime @default(now())
+  updateAt            DateTime @updatedAt
+  custmer             Customer @relation(fields: [customerId], references: [id])
+  customerId          String
+}
+
+// model Car {
+//   id Int  @id @default(autoincrement())
+//   model String
+//   year Int
+//   person Person @relation(fields: [personId], references: [id])
+//   personId Int
+
+//   }
+
+//   model Person {
+//   id Int    @id @default(autoincrement())
+//   username String @db.VarChar(255) @unique
+//   password String @db.VarChar(255)
+//   cars Car[]
+// }
 
 model Product {
   id        Int      @id @default(autoincrement())
@@ -157,21 +191,4 @@ model Product {
 //   id       Int    @id @default(autoincrement())
 //   username String @db.VarChar(255)
 //   password String @db.VarChar(255)
-// }
-
-// model CourseInfo {
-//   id              String   @id
-//   courseName      String
-//   courseStartDate String?
-//   price           String?
-//   createdAt       DateTime @default(now())
-//   updateAt        DateTime @updatedAt
-// }
-
-// model CourseRegister {
-//   id           String  @id
-//   courseName   String
-//   totalStudent String?
-//   droped       String?
-//   registered   String?
 // }

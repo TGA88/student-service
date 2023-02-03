@@ -123,8 +123,24 @@ exports.Prisma.CustomerScalarFieldEnum = makeEnum({
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  firstname: 'firstname',
-  fullname: 'fullname'
+  name: 'name',
+  surname: 'surname',
+  tel: 'tel',
+  email: 'email',
+  id_card: 'id_card',
+  bookbank: 'bookbank'
+});
+
+exports.Prisma.LoingProviderScalarFieldEnum = makeEnum({
+  id: 'id',
+  providerSource: 'providerSource',
+  providerType: 'providerType',
+  providerUid: 'providerUid',
+  displayName: 'displayName',
+  providerLoginImgurl: 'providerLoginImgurl',
+  createAt: 'createAt',
+  updateAt: 'updateAt',
+  customerId: 'customerId'
 });
 
 exports.Prisma.PostScalarFieldEnum = makeEnum({
@@ -215,6 +231,7 @@ exports.Prisma.ModelName = makeEnum({
   Author: 'Author',
   BooksOnAuthors: 'BooksOnAuthors',
   Customer: 'Customer',
+  LoingProvider: 'LoingProvider',
   Product: 'Product'
 });
 

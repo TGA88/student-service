@@ -15,12 +15,18 @@ interface ICustomerParams {
   }
 
 interface ICustomerModel {
-    name: string;
-    surname: string;
-    email:string
-    tel:string
-    id_card:string
-    bookbank:string
+    user: {
+      dataUser: {
+        name: string;
+        surname: string;
+        email:string
+        tel:string
+        id_card:string
+        bookbank:string
+      }
+
+    }
+
   }
   interface ITestModel {
     img: string;
@@ -50,7 +56,7 @@ export async function getOneCustmoer(req:FastifyRequest<{Params:ICustomerParams 
     try {
         const id = req.params.id
        const customer = await client.default.customer.findFirst({  
-        where:{id:parseInt(id)}
+        where:{id: id }
     })
        reply.status(200).send(customer)
     }
@@ -64,7 +70,7 @@ export async function getOneCustmoer(req:FastifyRequest<{Params:ICustomerParams 
 
 export async function postCustmoer(req:FastifyRequest<{Body: ICustomerModel,Headers: IHeaders}>,reply:FastifyReply) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore
+
     const userData = req.body.user.dataUser 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
@@ -73,7 +79,7 @@ export async function postCustmoer(req:FastifyRequest<{Body: ICustomerModel,Head
     try {
         const customer  =  await client.default.customer.create({
             data: {
-                name:userData.name,
+                name:userData['name'],
                 surname:userData.surname,
                 email:userData.email,
                 tel:userData.tel,
@@ -88,7 +94,7 @@ export async function postCustmoer(req:FastifyRequest<{Body: ICustomerModel,Head
                 }}
             }
         });
-        const getId = await client.customer.findFirst({where: { id: customer.id},include:{loingProvider:true}})
+        const getId = await client.default.customer.findFirst({where: { id: customer.id},include:{loingProvider:true}})
         console.log(getId)
         reply.status(200).send(getId)
     }
@@ -105,10 +111,12 @@ export async function updateCustmoer(req:FastifyRequest<{Params:ICustomerParams 
     try {
         const id = req.params.id
         const customer  =  await client.default.customer.update({
-            where:{id:parseInt(id)},
+            where:{
+              id: id
+            },
             data: {
-                firstname:req.body.firstname,
-                fullname:req.body.fullname
+                // firstname:req.body.firstname,
+                // fullname:req.body.fullname
             }
         });
         reply.status(200).send(customer)
@@ -123,7 +131,7 @@ export async function deleteCustmoer(req:FastifyRequest<{Params:ICustomerParams 
     try {
         const id = req.params.id
         const customer = await client.default.customer.delete({
-            where:{id:parseInt(id)}
+            where:{id: id}
         })
         reply.status(200).send({messges:"success"})
      }
@@ -183,13 +191,13 @@ export async function uploadfileEncode(req: FastifyRequest <{Body: ICustomerMode
         try {
             const files = req["file"]
 
-            const customer  =  await client.default.customer.create({
-                data: {
-                    firstname:req.body.firstname,
-                    // fullname:req.body.fullname,
-                    fullname:files,
-                }
-            });
+            // const customer  =  await client.default.customer.create({
+            //     data: {
+            //         // firstname:req.body.firstname,
+            //         fullname:req.body.fullname,
+            //         // fullname:files,
+            //     }
+            // });
             console.log(files)
         //     const tempFile = path.join(__dirname,`../../images/${files["fileName"]}`)
         //     console.log(tempFile)
