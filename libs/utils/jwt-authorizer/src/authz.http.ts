@@ -176,9 +176,9 @@ async function getSigningKey2(kid: string): Promise<string> {
 async function verifyLineToken(accessToken: string): Promise<any> {
   try {
     console.log("access_token",accessToken)
-    let verify = await axios.get(`https://api.line.me/oauth2/v2.1/verify?access_token=${accessToken}`)
+    const verify = await axios.get(`https://api.line.me/oauth2/v2.1/verify?access_token=${accessToken}`)
     if (verify.data.client_id === lineOptions.clientId) {
-      let getProfile = await axios.get(
+      const getProfile = await axios.get(
         "https://api.line.me/v2/profile", {
         headers: {
           'authorization': `Bearer ${accessToken}`
@@ -194,9 +194,9 @@ async function verifyLineToken(accessToken: string): Promise<any> {
 }
 
 //method 2 
-async function verifyLineTokenOpenID(): Promise<any>{
+// async function verifyLineTokenOpenID(): Promise<any>{
   
-}
+// }
 
 export async function authorize2(headers: any): Promise<IPayload> {
   console.log("test", headers)
