@@ -1,2 +1,2 @@
-export * as jwtHttpAuthorizer from './authz.http'
+export *  from './authz.http'
 
