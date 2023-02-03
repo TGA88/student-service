@@ -7,6 +7,6 @@ import { createCourseLookup } from './controller'
 
 
 export async function courseLookupRoutes(server: FastifyInstance) {
-  // server.post('/create',{handler: createCourseLookup})
-  server.post('/create',{preValidation: jwtAuth(server),handler: createCourseLookup})
+  server.post('/create',{handler: createCourseLookup})
+  server.post('/creates',{preValidation: jwtAuth(server), handler: createCourseLookup})
 }

@@ -23,7 +23,7 @@ export async function createCourseLookup(req: FastifyRequest, reply: FastifyRepl
 }
 
 function createCourseLookupResponseDTOToHttp(result: CourseLookupResponseDTO, reply: FastifyReply) {
-  
+  console.log("response WORK")
   if (result.isLeft()) {
     const err = result.value;
     switch (err.constructor) {

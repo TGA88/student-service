@@ -17,7 +17,7 @@ const producerConfig: kafkaProducerSetup = {
 export async function start(opt: FastifyListenOptions = { port: 3001, host: "0.0.0.0" }) {
   try {
 
-    let broker: Producer = await producer(producerConfig)
+    const broker: Producer = await producer(producerConfig)
 
     register(server)
     registerHandler(broker)

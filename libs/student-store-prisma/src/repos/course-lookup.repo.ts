@@ -12,21 +12,21 @@ export class CourseLookupRepoEmpl implements CourseLookupRepo {
   }
   async create(profileAGM: CourseLookupAGM): Promise<Result<CourseLookupAGM>> {
     try {
-      const item: Prisma.CourseLookupCreateInput = {
-        originalCourseId: profileAGM.originalCourseId,
-        courseName: profileAGM.courseName,
-        courseStartDate: profileAGM.courseStartDate,
-        price: profileAGM.price,
-      }
 
-      const create = await client.courseLookup.create({
-        data: item
+      await client.courseLookup.create({
+        data: {
+          originalCourseId: profileAGM.originalCourseId,
+          courseName: profileAGM.courseName,
+          courseStartDate: profileAGM.courseStartDate,
+          price: profileAGM.price,
+        }
       })
       return Result.ok<CourseLookupAGM>(profileAGM);
     } catch (error) {
       console.log("Error",error)
+      return Result.fail<any>("test");
     }
-    return Result.fail<any>("test");
+    
   }
   update(profileAGM: CourseLookupAGM): Promise<Result<CourseLookupAGM>> {
     throw new Error('Method not implemented.');

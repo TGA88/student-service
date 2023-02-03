@@ -4,7 +4,7 @@ import client from "../../dbclient";
 (async function createHooksForAggregateRoots () {
 
     client.$use(async (params, next) => {
-      console.log(`Prisma middleware:`)
+      console.log(`Prisma middlewaresss:`)
         const res =  await next(params)
         if (params.model == 'StudentProfile' && params.action == 'create') {
           // Logic only runs for delete action and Post model
