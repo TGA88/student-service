@@ -1,4 +1,4 @@
-import { makeAuthorizer, authorize2 } from "@student-service/utils/jwt-authorizer";
+import { oAuth2JwtAuthz, lineJwtAuthz } from "@student-service/utils/jwt-authorizer";
 import { FastifyInstance } from "fastify";
 
 //header need to contain authorization and login-type to use this function
@@ -6,8 +6,18 @@ import { FastifyInstance } from "fastify";
 export function jwtAuth(fastify: FastifyInstance): any {
     fastify.addHook('preHandler', async (req, reply, done) => {
     try {
-      const make = await authorize2(req.headers);
-      console.log("authen success: ", make)
+      if (req.headers["login-type"] === "line"){
+        console.log("LINEEEE")
+        const { makeAuthorizer,lineOptions } = lineJwtAuthz
+        const authen = makeAuthorizer(req.headers, lineOptions)
+        authen()
+      }
+      else {
+        console.log("AZURE")
+        const { makeAuthorizer, authzOptions } = oAuth2JwtAuthz
+        const authen = makeAuthorizer(req.headers,authzOptions)
+        authen()
+      }
       // done();
     } catch (error) {
       console.log("error", error);
