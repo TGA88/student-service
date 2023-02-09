@@ -1,0 +1,60 @@
+{
+  "name": "studentmcs-infrastucture-kafkadev",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/studentmcs-infrastucture-kafkadev/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/studentmcs-infrastucture-kafkadev",
+        "main": "apps/studentmcs-infrastucture-kafkadev/src/main.ts",
+        "tsConfig": "apps/studentmcs-infrastucture-kafkadev/tsconfig.app.json",
+        "assets": ["apps/studentmcs-infrastucture-kafkadev/src/assets"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/studentmcs-infrastucture-kafkadev/src/environments/environment.ts",
+              "with": "apps/studentmcs-infrastucture-kafkadev/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/js:node",
+      "options": {
+        "buildTarget": "studentmcs-infrastucture-kafkadev:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "studentmcs-infrastucture-kafkadev:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/studentmcs-infrastucture-kafkadev/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/studentmcs-infrastucture-kafkadev/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

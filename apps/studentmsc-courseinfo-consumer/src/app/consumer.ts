@@ -1,6 +1,6 @@
 import { consumer, kafkaConsumerSetup, kafkaMessage, sleep } from "@student-service/student-broker-kafka";
-import axios from "axios";
-import { Kafka } from "kafkajs";
+
+import { createCourseLookup } from "./modules/create/course-lookup/controller";
 
 // import { Client } from 'pg';
 
@@ -35,7 +35,8 @@ export async function start() {
               console.log("eventName: ", message.eventName)
               console.log("eventData: ", message.eventData)
               if (message.eventName === "course-create"){
-                const createCourseLookup = await axios.post('http://localhost:3000/api/course-lookup/create',message.eventData)
+                // const createCourseLookup = await axios.post('http://localhost:3000/api/course-lookup/create',message.eventData)
+                const create = await createCourseLookup(message.eventData)
               }
             }
             result.resolveOffset(i.offset)
