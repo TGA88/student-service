@@ -36,3 +36,4 @@ npx prisma migrate diff --from-schema-datamodel prisma/schema.prisma --to-schema
 ให้แก้เป็น path เต็มเช่น
   "libs/student-store-prisma/src/generated/prisma-client-js",
   "student-store-prisma/src/generated/prisma-client-js",
+  
